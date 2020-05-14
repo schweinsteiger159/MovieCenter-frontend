@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Slide_menu(){
+const Slide_menu = ({films}) => {
     return(
       <div className="container">
       <div className="row">
