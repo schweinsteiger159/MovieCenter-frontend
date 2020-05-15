@@ -8,8 +8,6 @@ import Slider from  '../slider';
 const Home = () =>{
     return (
         <>
-            <SignIn />
-            <SingUp />
             <Header />
 
             <Slider />

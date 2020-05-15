@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {BrowserRouter as Router, Route, Link, useParams} from 'react-router-dom';
 const ListMovie = (props) => {
     var title = (props.typeFilm === "SHOWING" ? "Phim đang chiếu" : "Phim sắp chiếu" ); 
     console.log(props.films);
@@ -27,15 +27,15 @@ const ListMovie = (props) => {
                             <div className="col-md-12 col-sm-12 col-xs-12">
                                 <div className="flex-wrap-movielist">
 
-                                    {props.films.map( (film) => ( 
+                                    {props.films.map( (film, key) => ( 
                                         
-                                        <div className="movie-item-style-2 movie-item-style-1">
+                                        <div className="movie-item-style-2 movie-item-style-1" key = {key}>
                                         <img src={"../assets/images/film/" +film.image} alt="" />
                                         <div className="hvr-inner">
                                             <a href="moviesingle.html"> Read more <i className="ion-android-arrow-dropright" /> </a>
                                         </div>
                                         <div className="mv-item-infor">
-                                            <h6><a href="#">{film.namefilm}</a></h6>
+                                            <h6><Link to={"/detail/" + film.codeFilm}>{film.namefilm}</Link></h6>
                                             <p className="rate"><i className="ion-android-star" /><span>{film.rating}</span> /10</p>
                                         </div>
                                     </div>

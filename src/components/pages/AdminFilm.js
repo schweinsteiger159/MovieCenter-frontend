@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import Header from '../header';
 import Footer from '../footer';
 import ListMovie from '../listmovie';
-class ComingMovie extends Component {
+import ManageFilm from '../ManageFilm';
+class AdminFilm extends Component {
     
     state = {
         films : []
     }
     componentDidMount(){
-        fetch('http://localhost:8080/api/film/coming-movie')
+        fetch('http://localhost:8080/api/film/getall')
         .then(res => res.json())
         .then( data => {
           console.log(data)
@@ -22,7 +23,7 @@ class ComingMovie extends Component {
             <>
                 <Header />
     
-                <ListMovie films={this.state.films}  typeFilm="COMING"/>
+                <ManageFilm films={this.state.films} />
     
                 <Footer />
             </>
@@ -30,4 +31,4 @@ class ComingMovie extends Component {
     }
 }
 
-export default ComingMovie
+export default AdminFilm

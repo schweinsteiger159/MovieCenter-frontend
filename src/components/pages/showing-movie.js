@@ -22,8 +22,6 @@ class ShowingMovie extends Component {
     render(){
         return (
             <>
-                <SignIn />
-                <SingUp />
                 <Header />
     
                 <ListMovie films={this.state.films} typeFilm="SHOWING"/>
