@@ -1,22 +1,84 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
+import qs from 'querystring';
+import * as AppConstant from '../components/contants/constants';
 
-const SignIn = () => {
+class SignIn extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: "",
+      password: "",
+      errorMessage: false
+    }
+  }
+
+  onChange = (e) => {
+    console.log("onChange");
+    var target = e.target;
+    var name = target.name;
+    var value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  onLogin = (e) => {
+    e.preventDefault();
+    var account = {
+      "userName": this.state.username,
+      "password": this.state.password
+    }
+    console.log(account);
+
+    this.authenticate(account);
+  }
+
+  authenticate(account) {
+
+    axios({
+      method: 'POST',
+      url: AppConstant.domainURL + "/auth/grantPermission",
+      data: account,
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(function (res) {
+        console.log(res)
+        AppConstant.saveUser("client", res.data)
+      })
+      .catch(function (err) {
+        console.log(err);
+        console.log("Lỗi");
+        this.setState({errorMessage : true})
+      }.bind(this));
+
+  }
+
+  validateForm = (stt) => {
+    if(stt === true){
+      return(<p style={{ color: "red" }}>* Tài khoản và mật khẩu không đúng</p>)
+    }
+  }
+
+  render() {
+    console.log(this.state)
     return (
-        <div className="login-wrapper" id="login-content">
+      <div className="login-wrapper" id="login-content">
         <div className="login-content">
           <a href="#" className="close">x</a>
           <h3>Login</h3>
-          <form method="post" action="#">
+          {this.validateForm(this.state.errorMessage)}
+          <form method="post" action="#" onSubmit={this.onLogin}>
             <div className="row">
               <label htmlFor="username">
                 Username:
-                <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+              <input onChange={this.onChange} type="text" name="username" id="username" required="required" />
               </label>
             </div>
             <div className="row">
               <label htmlFor="password">
                 Password:
-                <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+              <input onChange={this.onChange} type="password" name="password" id="password" required="required" />
               </label>
             </div>
             <div className="row">
@@ -28,7 +90,7 @@ const SignIn = () => {
               </div>
             </div>
             <div className="row">
-              <button type="submit">Login</button>
+              <button type="submit">Đăng nhập</button>
             </div>
           </form>
           <div className="row">
@@ -41,6 +103,7 @@ const SignIn = () => {
         </div>
       </div>
     )
+  }
 }
 
 export default SignIn;

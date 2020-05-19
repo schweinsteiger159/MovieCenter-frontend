@@ -15,7 +15,7 @@ class RouterURL extends Component {
                     <Route path="/showing-movie" component={ShowingMovie}></Route>
                     <Route path="/coming-movie" component={ComingMovie}></Route>
                     
-                    <Route path="/detail/:id" component={Detail}></Route>
+                    <Route exact path="/detail/:id" component={Detail}></Route>
                     
 
                     <Route path="/admin/film" component={AdminFilm}></Route>

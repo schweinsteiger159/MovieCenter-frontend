@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../header';
 import Footer from '../footer';
-import SignIn from '../signin';
-import SingUp from '../signup';
+import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import Detail from '../pages/detail'
 import ListMovie from '../listmovie';
+import * as AppConstant from '../contants/constants';
 
 class ShowingMovie extends Component {
     state = {
@@ -11,7 +12,7 @@ class ShowingMovie extends Component {
     }
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/film/showing-movie')
+        fetch(AppConstant.domainURL+'/api/film/showing-movie')
         .then(res => res.json())
         .then( data => {
           console.log(data)
@@ -25,7 +26,7 @@ class ShowingMovie extends Component {
                 <Header />
     
                 <ListMovie films={this.state.films} typeFilm="SHOWING"/>
-    
+                
                 <Footer />
             </>
         )

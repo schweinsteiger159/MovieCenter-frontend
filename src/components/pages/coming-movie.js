@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import Header from '../header';
 import Footer from '../footer';
 import ListMovie from '../listmovie';
+import * as AppConstant from '../contants/constants';
 class ComingMovie extends Component {
     
     state = {
         films : []
     }
     componentDidMount(){
-        fetch('http://localhost:8080/api/film/coming-movie')
+        fetch(AppConstant.domainURL + '/api/film/coming-movie')
         .then(res => res.json())
         .then( data => {
           console.log(data)

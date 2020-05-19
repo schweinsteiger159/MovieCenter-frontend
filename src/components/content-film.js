@@ -9,22 +9,38 @@ const ContentFilm = (props) => {
     
     const renderType = types => {
         if (types) {
-            return types.map(type => {
-               return <a href="#">{type.nameType},</a>
+            return types.map((type, key) => {
+               return <a href="#" key = {key}>{type.nameType},</a>
             })
         }
     }
-    // var type = ``;
-    // for(var i in types){
-    //     type += `<a href="#">${types[i].nameType}</a>, `;
-    // }
+
+    const buyTicket = (status) =>{
+      if(status == "SHOWING"){
+        return (
+          <div className="movie-btn">
+              
+              <div className="btn-transform transform-vertical">
+                <div>
+                  <a href="#" className="item item-1 yellowbtn">
+                    {" "}
+                    <i className="ion-card" /> Buy ticket
+                  </a>
+                </div>
+                <div>
+                  <a href="#" className="item item-2 yellowbtn">
+                    <i className="ion-card" />
+                  </a>
+                </div>
+              </div>
+            </div>
+        )
+      }
+    }
+
     return (
         <>
           <div>
- 
-  
-  
-  
   <div className="hero mv-single-hero">
     <div className="container">
       <div className="row">
@@ -42,24 +58,9 @@ const ContentFilm = (props) => {
     <div className="container">
       <div className="row ipad-width2">
         <div className="col-md-4 col-sm-12 col-xs-12">
-          <div className="movie-img sticky-sb">
+          <div className="movie-img">
             <img src={"../assets/images/film/" +props.film.image} alt />
-            <div className="movie-btn">
-              
-              <div className="btn-transform transform-vertical">
-                <div>
-                  <a href="#" className="item item-1 yellowbtn">
-                    {" "}
-                    <i className="ion-card" /> Buy ticket
-                  </a>
-                </div>
-                <div>
-                  <a href="#" className="item item-2 yellowbtn">
-                    <i className="ion-card" />
-                  </a>
-                </div>
-              </div>
-            </div>
+            {buyTicket(props.film.status)}
           </div>
         </div>
         <div className="col-md-8 col-sm-12 col-xs-12">
