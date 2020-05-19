@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import qs from 'querystring';
 import * as AppConstant from '../components/contants/constants';
+import { Redirect } from 'react-router-dom';
 
 class SignIn extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class SignIn extends Component {
   }
 
   onChange = (e) => {
-    console.log("onChange");
     var target = e.target;
     var name = target.name;
     var value = target.type === 'checkbox' ? target.checked : target.value;
@@ -29,7 +29,6 @@ class SignIn extends Component {
       "userName": this.state.username,
       "password": this.state.password
     }
-    console.log(account);
 
     this.authenticate(account);
   }
@@ -45,6 +44,9 @@ class SignIn extends Component {
       .then(function (res) {
         console.log(res)
         AppConstant.saveUser("client", res.data)
+        window.location.reload();
+        
+
       })
       .catch(function (err) {
         console.log(err);
@@ -61,7 +63,6 @@ class SignIn extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="login-wrapper" id="login-content">
         <div className="login-content">

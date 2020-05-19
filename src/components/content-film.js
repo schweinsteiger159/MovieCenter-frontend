@@ -16,25 +16,43 @@ const ContentFilm = (props) => {
     }
 
     const buyTicket = (status) =>{
+      var user = JSON.parse(localStorage.getItem("client"));
+      var check = "";
+      
       if(status == "SHOWING"){
-        return (
-          <div className="movie-btn">
-              
-              <div className="btn-transform transform-vertical">
-                <div>
-                  <a href="#" className="item item-1 yellowbtn">
-                    {" "}
-                    <i className="ion-card" /> Buy ticket
-                  </a>
+        if(user != null) {
+          return (
+            <div className="movie-btn">
+                <div className="btn-transform transform-vertical">
+                  <div>
+                    <a href="/book-ticket" className="item item-1 yellowbtn">
+                      {" "}
+                      <i className="ion-card" /> Buy ticket
+                    </a>
+                  </div>
+                  <div>
+                    <a href="/book-ticket" className="item item-2 yellowbtn">
+                      <i className="ion-card" />
+                    </a>
+                  </div>
+                  
                 </div>
-                <div>
-                  <a href="#" className="item item-2 yellowbtn">
-                    <i className="ion-card" />
-                  </a>
-                </div>
+                
               </div>
+          )
+        }else{
+          return (
+            <div className="movie-btn">
+              <p>Đăng nhập để đặt vé</p>    
             </div>
-        )
+          )
+        }
+      }
+    }
+
+    function iframe(trailer){
+      return {
+        __html : trailer
       }
     }
 
@@ -130,196 +148,13 @@ const ContentFilm = (props) => {
                     <div className="row">
                       <div className="rv-hd">
                         <div>
-                          <h3>Videos &amp; Photos of</h3>
-                          <h2>Skyfall: Quantum of Spectre</h2>
+                          <div dangerouslySetInnerHTML={ iframe(props.film.trailer) } />
+
+                          
                         </div>
                       </div>
-                      <div className="title-hd-sm">
-                        <h4>
-                          Videos <span>(8)</span>
-                        </h4>
-                      </div>
-                      <div className="mvsingle-item media-item">
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item1.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Trailer: Watch New Scenes</a>
-                            </h6>
-                            <p className="time"> 1: 31</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item2.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Featurette: “Avengers Re-Assembled</a>
-                            </h6>
-                            <p className="time"> 1: 03</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item3.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Interview: Robert Downey Jr</a>
-                            </h6>
-                            <p className="time"> 3:27</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item4.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Interview: Scarlett Johansson</a>
-                            </h6>
-                            <p className="time"> 3:27</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item1.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">
-                                Featurette: Meet Quicksilver &amp; The Scarlet
-                                Witch
-                              </a>
-                            </h6>
-                            <p className="time"> 1: 31</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item2.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Interview: Director Joss Whedon</a>
-                            </h6>
-                            <p className="time"> 1: 03</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item3.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Interview: Mark Ruffalo</a>
-                            </h6>
-                            <p className="time"> 3:27</p>
-                          </div>
-                        </div>
-                        <div className="vd-item">
-                          <div className="vd-it">
-                            <img
-                              className="vd-img"
-                              src="../assets/images/uploads/vd-item4.jpg"
-                              alt
-                            />
-                            <a
-                              className="fancybox-media hvr-grow"
-                              href="https://www.youtube.com/embed/o-0hcF97wy0"
-                            >
-                              <img src="../assets/images/uploads/play-vd.png" alt />
-                            </a>
-                          </div>
-                          <div className="vd-infor">
-                            <h6>
-                              {" "}
-                              <a href="#">Official Trailer #2</a>
-                            </h6>
-                            <p className="time"> 3:27</p>
-                          </div>
-                        </div>
-                      </div>
+                      
+                      
                       
                     
                     </div>

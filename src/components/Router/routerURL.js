@@ -5,6 +5,7 @@ import ShowingMovie from '../pages/showing-movie';
 import ComingMovie from '../pages/coming-movie';
 import Detail from '../pages/detail'
 import AdminFilm from '../pages/AdminFilm';
+import BookTicket from '../pages/book-ticket';
 
 class RouterURL extends Component {
     render(){
@@ -15,8 +16,8 @@ class RouterURL extends Component {
                     <Route path="/showing-movie" component={ShowingMovie}></Route>
                     <Route path="/coming-movie" component={ComingMovie}></Route>
                     
-                    <Route exact path="/detail/:id" component={Detail}></Route>
-                    
+                    <Route path="/detail/:id" component={Detail}></Route>
+                    <Route path="/book-ticket" component={BookTicket}></Route>
 
                     <Route path="/admin/film" component={AdminFilm}></Route>
                 </Switch>
