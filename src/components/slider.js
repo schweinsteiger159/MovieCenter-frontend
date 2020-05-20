@@ -59,8 +59,7 @@ const Slider = () => {
                         <span className="yell"><a href="#">Action</a></span>
                         <span className="orange"><a href="#">advanture</a></span>
                       </div>
-                      <h1><a href="#">guardians of the<br />
-                          galaxy <span>2015</span></a></h1>
+                      <h1><a href="#">IRON MAN<span>2015</span></a></h1>
                       <div className="social-btn">
                         <a href="#" className="parent-btn"><i className="ion-play" /> Watch Trailer</a>
                         <a href="#" className="parent-btn"><i className="ion-heart" /> Add to Favorite</a>

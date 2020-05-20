@@ -11,7 +11,7 @@ class RouterURL extends Component {
     render(){
         return (
             <Router>
-                <Switch>
+                
                     <Route exact path="/" component={Home}></Route>
                     <Route path="/showing-movie" component={ShowingMovie}></Route>
                     <Route path="/coming-movie" component={ComingMovie}></Route>
@@ -20,7 +20,7 @@ class RouterURL extends Component {
                     <Route path="/book-ticket" component={BookTicket}></Route>
 
                     <Route path="/admin/film" component={AdminFilm}></Route>
-                </Switch>
+                
             </Router>
         )
     }

@@ -12,6 +12,7 @@ class ShowingMovie extends Component {
     }
 
     componentDidMount(){
+        window.scrollTo(0, 0)
         fetch(AppConstant.domainURL+'/api/film/showing-movie')
         .then(res => res.json())
         .then( data => {
@@ -23,11 +24,11 @@ class ShowingMovie extends Component {
     render(){
         return (
             <>
-                <Header />
+                
     
                 <ListMovie films={this.state.films} typeFilm="SHOWING"/>
                 
-                <Footer />
+                
             </>
         )
     }

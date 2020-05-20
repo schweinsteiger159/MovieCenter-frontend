@@ -11,6 +11,7 @@ class Detail extends Component{
     }
     
     componentDidMount(){
+        window.scrollTo(0, 0)
         fetch(AppConstant.domainURL+'/api/film/findcode/'+this.props.match.params.id)
         .then(res => res.json())
         .then( data => {
@@ -23,11 +24,11 @@ class Detail extends Component{
         console.log(this.props)
         return (
             <>
-            <Header />
+            
 
             <ContentFilm film ={this.state.film}/>
             
-            <Footer />
+          
             </>
         )
     }

@@ -9,6 +9,7 @@ class ComingMovie extends Component {
         films : []
     }
     componentDidMount(){
+        window.scrollTo(0, 0)
         fetch(AppConstant.domainURL + '/api/film/coming-movie')
         .then(res => res.json())
         .then( data => {
@@ -21,11 +22,11 @@ class ComingMovie extends Component {
     render(){
         return (
             <>
-                <Header />
+                
     
                 <ListMovie films={this.state.films}  typeFilm="COMING"/>
     
-                <Footer />
+              
             </>
         )
     }

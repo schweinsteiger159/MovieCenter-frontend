@@ -32,10 +32,10 @@ const ListMovie = (props) => {
                                         <div className="movie-item-style-2 movie-item-style-1" key = {key}>
                                         <img src={"../assets/images/film/" +film.image} alt="" />
                                         <div className="hvr-inner">
-                                        <a href={"/detail/" + film.codeFilm}>Chi tiết</a>
+                                        <Link to={"/detail/" + film.codeFilm}>Chi tiết</Link>
                                         </div>
                                         <div className="mv-item-infor">
-                                            <h6><a href={"/detail/" + film.codeFilm}>{film.namefilm}</a></h6>
+                                            <h6><Link to={"/detail/" + film.codeFilm}>{film.namefilm}</Link></h6>
                                             
                                             <p className="rate"><i className="ion-android-star" /><span>{film.rating}</span> /10</p>
                                         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import SignIn from './signin';
 import SingUp from './signup';
+import { Link } from 'react-router-dom';
+
 const Header = () => {
 
 
@@ -48,7 +50,7 @@ const Header = () => {
                   <span />
                 </div>
               </div>
-              <a href="/"><img className="logo" src="../assets/images/logo1.png" alt="" width={119} height={58} /></a>
+              <Link to="/"><img className="logo" src="../assets/images/logo1.png" alt="" width={119} height={58} /></Link>
             </div>
 
             <div className="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
@@ -57,9 +59,9 @@ const Header = () => {
                   <a href="#page-top" />
                 </li>
                 <li className="dropdown first">
-                  <a className="btn btn-default dropdown-toggle lv1" href="/">
+                  <Link className="btn btn-default dropdown-toggle lv1" to="/">
                     Trang chủ
-                </a>
+                </Link>
                 </li>
                 <li className="dropdown first">
                   <a className="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
@@ -67,8 +69,8 @@ const Header = () => {
                   </a>
                   <ul className="dropdown-menu level1">
 
-                    <li><a href="/showing-movie">Phim đang chiếu</a></li>
-                    <li><a href="/coming-movie">Phim sắp chiếu</a></li>
+                    <li><Link to="/showing-movie">Phim đang chiếu</Link></li>
+                    <li><Link to="/coming-movie">Phim sắp chiếu</Link></li>
                   </ul>
                 </li>
 
