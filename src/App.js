@@ -10,6 +10,7 @@ import Detail from './components/pages/detail'
 import AdminFilm from './components/pages/AdminFilm';
 import BookTicket from './components/pages/book-ticket';
 import Footer from './components/footer';
+import Login from './components/pages/login';
 
 function App() {
 
@@ -23,12 +24,14 @@ function App() {
 
       <Route path="/detail/:id" component={Detail}></Route>
       <Route path="/book-ticket" component={BookTicket}></Route>
+      <Route path="/customer/login" component={Login}></Route>
 
       <Route path="/admin/film" component={AdminFilm}></Route>
       
       
-
       <Footer></Footer>
+
+      
     </Router>
 
 

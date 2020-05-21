@@ -18,8 +18,8 @@ const Header = () => {
     if (user == null) {
       return (
         <ul className="nav navbar-nav flex-child-menu menu-right">
-          <li className="loginLink"><a href="#">Đăng nhập</a></li>
-          <li className="btn signupLink"><a href="#">Đăng ký</a></li>
+          <li className=""><Link to="/customer/login">Đăng nhập</Link></li>
+          <li className="btn"><Link href="#">Đăng ký</Link></li>
         </ul>
       )
     }else{
@@ -34,9 +34,9 @@ const Header = () => {
   return (
 
     <>
-     
+{/*      
       <SignIn />
-      <SingUp />
+      <SingUp /> */}
       <header className="ht-header full-width-hd">
         <div className="row">
           <nav id="mainNav" className="navbar navbar-default navbar-custom">
