@@ -8,21 +8,24 @@ import ShowingMovie from './components/pages/showing-movie';
 import ComingMovie from './components/pages/coming-movie';
 import DetailFilm from './components/pages/detail-film';
 import Login from './components/pages/login';
+import Cinema from './components/pages/cinema';
+import SelectSeat from './components/pages/select-seat';
 
 
 function App() {
 
   return (
     <Router>
-      <Header></Header>
+      
       
 
       <Route exact path="/" component={Home}></Route>
       <Route path="/showing-movie" component={ShowingMovie}></Route>
       <Route path="/coming-movie" component={ComingMovie}></Route>
       <Route path="/detail/:id" component={DetailFilm}></Route>
+      <Route path="/cinema" component={Cinema}></Route>
+      <Route path="/select-seat" component={SelectSeat}></Route>
       <Route path="/customer/login" component={Login}></Route>
-      <Footer></Footer>
       
 
       

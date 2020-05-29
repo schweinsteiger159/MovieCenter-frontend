@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import qs from 'querystring';
 import * as AppConstant from '../contants/constants';
+import Header from '../header';
+import Footer from '../footer';
 
 
 class Login extends Component {
@@ -11,7 +13,8 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            errorMessage: false
+            errorMessage: false,
+            isRedirect : false
         }
     }
 
@@ -45,10 +48,8 @@ class Login extends Component {
             .then(function (res) {
                 console.log(res)
                 AppConstant.saveUser("client", res.data)
-                window.location.reload();
-
-
-            })
+                this.setState({isRedirect : true})
+            }.bind(this))
             .catch(function (err) {
                 console.log(err);
                 console.log("Lỗi");
@@ -63,8 +64,26 @@ class Login extends Component {
         }
     }
     render() {
+        window.scrollTo(0, 0)
+        console.log(this.state)
+        if(this.state.isRedirect){
+            var {location} = this.props;
+            if(location.state == undefined){
+               return(
+                <Redirect to="/" />
+               )
+            }
+           return(
+               
+            <Redirect to={location.state.from.pathname} />
+           )
+        }
+
+        var { location } = this.props;
+        console.log(location);
         return (
             <>
+            <Header></Header>
                 <div className="whole-wrap">
                     <div className="container box_1170">
                         <div className="section-top-border">
@@ -121,7 +140,7 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-
+                <Footer></Footer>
             </>
         )
     }

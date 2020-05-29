@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ListMovie from '../list-movie';
 import * as AppConstant from '../contants/constants';
+import Header from '../header';
+import Footer from '../footer';
+import BradcamArea from '../bradcam-area';
 
 class ShowingMovie extends Component{
     state = {
@@ -18,8 +21,13 @@ class ShowingMovie extends Component{
         .catch(console.log)
     }
     render(){
+        
         return(
+            <>
+            <Header></Header>
             <ListMovie films={this.state.films} typeFilm="SHOWING"></ListMovie>
+            <Footer></Footer>
+            </>
         )
     }
 }

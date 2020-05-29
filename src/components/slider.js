@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
+import Carousel from 'react-bootstrap/Carousel'
 
 class Slider extends Component {
-    
+    constructor(props) {
+        super(props)
+        this.state = {
+            index: 0,
+            setIndex: 0
+        }
+    }
+
+    handleSelect = (selectedIndex, e) => {
+        this.setState({ index: selectedIndex })
+        //setIndex(selectedIndex);
+    };
     render() {
         console.log("-----render slider -----")
+        console.log(this.state);
         return (
             <div className="slider_area">
                 <div className="slider_active owl-carousel">
@@ -12,11 +25,11 @@ class Slider extends Component {
                             <div className="row align-items-center">
                                 <div className="col-xl-12 col-md-12">
                                     <div className="slider_text text-center">
-                                        <h3>Mua vé ngay</h3>
-                                        <p>Tận hưởng giây phút thư giản tuyệt vời</p>
+                                        <h3>Cinema</h3>
+                                        <p>Pixel perfect design with awesome contents</p>
                                         <a href="#" className="boxed-btn3">
-                                            Xem xuất chiếu
-                                        </a>
+                                            Explore Now
+              </a>
                                     </div>
                                 </div>
                             </div>
@@ -27,11 +40,11 @@ class Slider extends Component {
                             <div className="row align-items-center">
                                 <div className="col-xl-12 col-md-12">
                                     <div className="slider_text text-center">
-                                    <h3>Mua vé ngay</h3>
-                                        <p>Tận hưởng giây phút thư giản tuyệt vời</p>
+                                        <h3>Cinema</h3>
+                                        <p>Pixel perfect design with awesome contents</p>
                                         <a href="#" className="boxed-btn3">
-                                            Xem xuất chiếu
-                                        </a>
+                                            Explore Now
+              </a>
                                     </div>
                                 </div>
                             </div>
@@ -42,11 +55,11 @@ class Slider extends Component {
                             <div className="row align-items-center">
                                 <div className="col-xl-12 col-md-12">
                                     <div className="slider_text text-center">
-                                    <h3>Mua vé ngay</h3>
-                                        <p>Tận hưởng giây phút thư giản tuyệt vời</p>
+                                        <h3>Cinema</h3>
+                                        <p>Pixel perfect design with awesome contents</p>
                                         <a href="#" className="boxed-btn3">
-                                            Xem xuất chiếu
-                                        </a>
+                                            Explore Now
+              </a>
                                     </div>
                                 </div>
                             </div>

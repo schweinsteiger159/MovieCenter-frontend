@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as AppConstant from '../contants/constants';
 import ContentFilm from '../content-film'
+import Header from '../header';
+import Footer from '../footer';
 
 class DetailFilm extends Component{
     state = {
@@ -18,14 +20,13 @@ class DetailFilm extends Component{
         .catch(console.log)
     }
     render(){
-        console.log(this.props)
         return (
             <>
-            
+            <Header></Header>
 
-            <ContentFilm film ={this.state.film}/>
+            <ContentFilm film ={this.state.film} location={this.props.location}/>
             
-          
+            <Footer></Footer>
             </>
         )
     }

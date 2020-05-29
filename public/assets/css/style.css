@@ -31,6 +31,50 @@ body {
   font-style: normal;
 }
 
+.choose-element{
+  color: #f44a40 !important;
+  border: 1px solid #f44a40 !important;
+}
+
+.day-element {
+  border: 2px solid #fdfcf0;
+  border-radius: 5px;
+  color: #717171;
+  cursor: pointer;
+  height: 48px;
+  position: relative;
+  width: 77px;
+}
+
+.day-element > p {
+  color: #717171;
+  font-size: 11px;
+  font-style: normal;
+  left: 4px;
+  position: absolute;
+  top: 20px;
+}
+
+.day-element > strong {
+  color: #717171;
+  font-size: 32px;
+  font-weight: normal;
+  left: 31px;
+  line-height: 32px;
+  position: absolute;
+  top: 8px;
+}
+
+.space-left{
+  width: 10px
+}
+
+.seat-title{
+  margin-right: 10px;
+  margin-top: 10px;
+  cursor: default;
+}
+
 /* line 13, ../../Arafath/CL/December/231. Travel-02/HTML/scss/theme-default.scss */
 .img {
   max-width: 100%;

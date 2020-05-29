@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ListMovie from '../list-movie';
 import * as AppConstant from '../contants/constants';
-
+import Header from '../header'
+import Footer from '../footer';
 class ComingMovie extends Component{
     state = {
         films : []
@@ -20,11 +21,11 @@ class ComingMovie extends Component{
     render(){
         return (
             <>
-                
+                <Header></Header>
     
                 <ListMovie films={this.state.films}  typeFilm="COMING"/>
     
-              
+                <Footer></Footer>
             </>
         )
     }
