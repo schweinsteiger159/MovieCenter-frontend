@@ -40,7 +40,7 @@ class ContentFilm extends Component {
         var user = JSON.parse(localStorage.getItem("client"));
         if (stt === 'SHOWING') {
             return (
-                <Link class="genric-btn primary circle" style={{ width: "-webkit-fill-available" }} to="/cinema">Đặt vé</Link>  
+                <Link class="genric-btn primary circle" style={{ width: "-webkit-fill-available" }} to="/cinema">Đặt vé</Link>
             )
         }
     }
@@ -50,9 +50,9 @@ class ContentFilm extends Component {
         console.log(user)
         if (user == null) {
             console.log("user = null")
-            this.setState({isRedirect : 1})
+            this.setState({ isRedirect: 1 })
         } else {
-            this.setState({isRedirect : 3})
+            this.setState({ isRedirect: 3 })
         }
     }
 
@@ -75,7 +75,7 @@ class ContentFilm extends Component {
         //         <Redirect to="/cinema" />
         //     )
         // }
-        
+
         return (
             <>
                 <div className="whole-wrap">
@@ -86,7 +86,7 @@ class ContentFilm extends Component {
                                 <div className="col-md-3">
 
                                     <div className="typography">
-                                        <img src={"../assets/img/upload/" + this.props.film.image} alt="" class="img-fluid" />
+                                        <img src={this.props.film.image} alt="" class="img-fluid" />
                                     </div>
                                     <br></br>
                                     <div className="mb-20" >
@@ -98,7 +98,12 @@ class ContentFilm extends Component {
                                     <div className="">
                                         <ul className="unordered-list">
                                             <li>{this.props.film.description}</li>
+                                            <li>
+                                                <h3>Trailer</h3>
+                                            </li>
                                         </ul>
+
+                                        <div dangerouslySetInnerHTML={{ __html: this.props.film.trailer }}></div>
                                     </div>
                                 </div>
                                 <div className="col-md-3 mt-sm-30">

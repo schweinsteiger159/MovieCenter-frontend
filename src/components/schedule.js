@@ -171,6 +171,7 @@ class ScheduleFilm extends Component {
                                 <h4>Không có lịch chiếu</h4>
                             ) : (
                                     data.map(i => {
+                                        console.log(i.film.image)
                                         return (
                                             <>
 
@@ -178,7 +179,7 @@ class ScheduleFilm extends Component {
                                                     <h3 className="mb-30">{i.film.namefilm}- {this.state.indexCinema} - {i.date}</h3>
                                                     <div className="row">
                                                         <div className="col-md-3">
-                                                            <img src={"../assets/img/upload/" + i.film.image} className="img-fluid" style={{ width: "70%", }} />
+                                                            <img src={i.film.image} className="img-fluid" style={{ width: "70%", }} />
                                                         </div>
                                                         <div className="col-md-9 mt-sm-20">
                                                             {i.schedule.map(j => {

@@ -15,7 +15,7 @@ class Cinema extends Component {
     }
     componentDidMount(){
         window.scrollTo(0, 0)
-        fetch(AppConstant.domainURL + '/api/cinema/all')
+        fetch(AppConstant.domainURL + '/api/cinema/status/ACTIVE')
         .then(res => res.json())
         .then( data => {
           console.log(data)

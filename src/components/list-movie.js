@@ -22,7 +22,7 @@ const ListMovie = (props) => {
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="single_place">
                                 <div className="thumb" >
-                                <img src={"../assets/img/upload/" +film.image} alt="" style={{ weight: 100, height: 350 }}/>
+                                <img src={film.image} alt="" style={{ weight: 100, height: 350 }}/>
                                     <a href="#" className="prise">
                                         {film.status}
                                 </a>
