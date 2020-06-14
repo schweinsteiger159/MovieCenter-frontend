@@ -3,7 +3,28 @@ import React, { Component } from 'react';
 class ScreenBox extends Component {
     
     selectSeat = (title, number) => {
-        console.log(title+"-"+number);
+        
+        var client = JSON.parse(localStorage.getItem("client"));
+        var idSeat = title + (parseInt(number) < 10 ? "0"+number : number);
+        
+        console.log(idSeat);
+
+        var item = {
+            cinema: client.schedule.item.cinema,
+            room: client.schedule.item.room,
+            codeFilm: client.schedule.item.codeFilm,
+            start: client.schedule.item.start,
+            idSeat : idSeat
+        }
+
+        var clientCurrent = {
+            "username": client.username,
+            "token": client.type + " " + client.token,
+            "schedule": {item}
+        }
+
+        localStorage.setItem("client", JSON.stringify(clientCurrent));
+
     } 
 
     render() {

@@ -20,51 +20,43 @@ class Slider extends Component {
         return (
             <div className="slider_area">
                 <div className="slider_active owl-carousel">
-                    <div className="single_slider  d-flex align-items-center slider_bg_1 overlay">
-                        <div className="container">
-                            <div className="row align-items-center">
-                                <div className="col-xl-12 col-md-12">
-                                    <div className="slider_text text-center">
-                                        <h3>Cinema</h3>
-                                        <p>Pixel perfect design with awesome contents</p>
-                                        <a href="#" className="boxed-btn3">
-                                            Explore Now
-              </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="single_slider  d-flex align-items-center slider_bg_2 overlay">
-                        <div className="container">
-                            <div className="row align-items-center">
-                                <div className="col-xl-12 col-md-12">
-                                    <div className="slider_text text-center">
-                                        <h3>Cinema</h3>
-                                        <p>Pixel perfect design with awesome contents</p>
-                                        <a href="#" className="boxed-btn3">
-                                            Explore Now
-              </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="single_slider  d-flex align-items-center slider_bg_3 overlay">
-                        <div className="container">
-                            <div className="row align-items-center">
-                                <div className="col-xl-12 col-md-12">
-                                    <div className="slider_text text-center">
-                                        <h3>Cinema</h3>
-                                        <p>Pixel perfect design with awesome contents</p>
-                                        <a href="#" className="boxed-btn3">
-                                            Explore Now
-              </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Carousel>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://i.imgur.com/XizzICY.jpg"
+                                alt="First slide"
+                            />
+                            <Carousel.Caption>
+                                <h3>First slide label</h3>
+                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://i.imgur.com/2WY8Brg.jpg"
+                                alt="Third slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3>Second slide label</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://i.imgur.com/2WY8Brg.jpg"
+                                alt="Third slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3>Third slide label</h3>
+                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    </Carousel>
                 </div>
             </div>
 

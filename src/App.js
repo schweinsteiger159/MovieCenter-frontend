@@ -10,7 +10,8 @@ import DetailFilm from './components/pages/detail-film';
 import Login from './components/pages/login';
 import Cinema from './components/pages/cinema';
 import SelectSeat from './components/pages/select-seat';
-
+import Blog from './components/pages/blog';
+import BlogDetail from './components/pages/detail-blog';
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
       <Route path="/cinema" component={Cinema}></Route>
       <Route path="/select-seat" component={SelectSeat}></Route>
       <Route path="/customer/login" component={Login}></Route>
-      
+      <Route path="/blog" component={Blog}></Route>
+      <Route exact path="/blog-detail" component={BlogDetail}></Route>
 
       
     </Router>

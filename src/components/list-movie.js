@@ -56,7 +56,7 @@ const ListMovie = (props) => {
                         <div className="more_place_btn text-center">
                             <a className="boxed-btn4" href="#">
                                 More Places
-          </a>
+                            </a>
                         </div>
                     </div>
                 </div>

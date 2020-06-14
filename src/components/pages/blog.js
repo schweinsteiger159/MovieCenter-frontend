@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import Slider from '../slider';
 import Header from '../header'
 import Footer from '../footer';
-import MainHome from '../main-home';
+import ListBlog from '../list-blog';
 
-class Home extends Component{
-   
-    render(){
+class Blog extends Component{
+    
+    componentDidMount(){
         window.scrollTo(0, 0)
+    }
+
+    render(){
+        
         console.log("-----render home -----")
         return(
             <>
             <Header></Header>
-            <Slider></Slider>
-            <MainHome></MainHome>
+            <ListBlog ></ListBlog>
             <Footer></Footer>
             </>
         )
     }
 }
-export default Home
+export default Blog

@@ -72,6 +72,12 @@ class Login extends Component {
                return(
                 <Redirect to="/" />
                )
+            }else{
+                var path = location.state.from.pathname + location.state.from.search
+                console.log(path);
+                return(
+                    <Redirect to={path} />
+                )
             }
            return(
                

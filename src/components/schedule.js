@@ -238,7 +238,8 @@ class ScheduleFilm extends Component {
             cinema: cinema,
             room: room,
             codeFilm: codeFilm,
-            start: start
+            start: start,
+            idSeat : ""
         }
 
         var clientCurrent = {

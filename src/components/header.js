@@ -13,7 +13,6 @@ class Header extends Component {
     }
     checkLogin = () => {
         var user = JSON.parse(localStorage.getItem("client"));
-        var btnRight = "";
         if (user == null) {
             return (
                 <ul>
@@ -114,17 +113,9 @@ class Header extends Component {
                                                             <Link to="/cinema">Xem xuất chiếu</Link>
                                                         </li>
                                                         <li>
-                                                            <a href="#">
-                                                                blog <i className="ti-angle-down" />
-                                                            </a>
-                                                            <ul className="submenu">
-                                                                <li>
-                                                                    <a href="blog.html">blog</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="single-blog.html">single-blog</a>
-                                                                </li>
-                                                            </ul>
+                                                            <Link className="" to="/blog">
+                                                                Blog
+                                                            </Link>
                                                         </li>
 
                                                     </ul>
