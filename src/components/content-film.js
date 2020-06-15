@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'ejs';
-import { Redirect, Route, Link } from 'react-router-dom';
+import { Redirect, Route, Link, useLocation } from 'react-router-dom';
 
 import * as AppConstant from './contants/constants';
 import Alert from '@material-ui/lab/Alert';

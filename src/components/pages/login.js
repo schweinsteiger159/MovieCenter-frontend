@@ -64,6 +64,7 @@ class Login extends Component {
         }
     }
     render() {
+        console.log("123")
         window.scrollTo(0, 0)
         console.log(this.state)
         if(this.state.isRedirect){

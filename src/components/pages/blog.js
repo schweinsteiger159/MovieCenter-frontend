@@ -7,11 +7,11 @@ import ListBlog from '../list-blog';
 class Blog extends Component{
     
     componentDidMount(){
-        window.scrollTo(0, 0)
+        
     }
 
     render(){
-        
+        window.scrollTo(0, 0)
         console.log("-----render home -----")
         return(
             <>
