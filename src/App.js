@@ -12,6 +12,7 @@ import Cinema from './components/pages/cinema';
 import SelectSeat from './components/pages/select-seat';
 import Blog from './components/pages/blog';
 import BlogDetail from './components/pages/detail-blog';
+import SignUp from './components/pages/sign-up';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
       <Route path="/customer/login" component={Login}></Route>
       <Route path="/blog" component={Blog}></Route>
       <Route exact path="/blog-detail" component={BlogDetail}></Route>
+      <Route path='/customer/registration' component={SignUp}></Route>
 
       
     </Router>

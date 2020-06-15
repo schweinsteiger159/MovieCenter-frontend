@@ -22,7 +22,7 @@ class Header extends Component {
                          </Link>
                     </li>
                     <li>
-                        <Link to="/customer/register">
+                        <Link to="/customer/registration">
                             Đăng ký
                         </Link>
                     </li>
