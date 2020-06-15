@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 class Footer extends Component{
     render(){
+      window.scrollTo(0, 0)
         return(
             <footer className="footer">
   <div className="footer_top">
