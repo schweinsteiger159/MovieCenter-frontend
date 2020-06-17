@@ -7,6 +7,8 @@ class ListBlog extends Component {
         super(props);
         this.state = {
             blog: null,
+            sizeItem: 2,
+            size : 2
         }
     }
 
@@ -69,21 +71,21 @@ class ListBlog extends Component {
         return (
             <article className="blog_item">
                 <div className="blog_item_img">
-                    <Link to={"/blog-detail?code="+i.code}>
-                    <img
-                        className="card-img rounded-0"
-                        src={i.thumbnail}
-                        alt
-                    />
+                    <Link to={"/blog-detail?code=" + i.code}>
+                        <img
+                            className="card-img rounded-0"
+                            src={i.thumbnail}
+                            alt
+                        />
                     </Link>
-                    
+
                     <a className="blog_item_date">
                         <h3>{date[0]}</h3>
                         <p>{monthStr}</p>
                     </a>
                 </div>
                 <div className="blog_details">
-                    <Link className="d-inline-block" to={"/blog-detail?code="+i.code}>
+                    <Link className="d-inline-block" to={"/blog-detail?code=" + i.code}>
                         <h2>{i.title}</h2>
                     </Link>
                     <ul className="blog-info-link">
@@ -126,36 +128,25 @@ class ListBlog extends Component {
 
                                         {
                                             this.state.blog.map((i, k) => (
+                                                (k < this.state.sizeItem 
+                                                ?
                                                 this.renderBlog(i, k)
+                                                :
+                                                <></>
+                                                )
+                                                
                                             ))
                                         }
 
-
-
-                                        <nav className="blog-pagination justify-content-center d-flex">
-                                            <ul className="pagination">
-                                                <li className="page-item">
-                                                    <a href="#" className="page-link" aria-label="Previous">
-                                                        <i className="ti-angle-left" />
-                                                    </a>
-                                                </li>
-                                                <li className="page-item">
-                                                    <a href="#" className="page-link">
-                                                        1
-                                                    </a>
-                                                </li>
-                                                <li className="page-item active">
-                                                    <a href="#" className="page-link">
-                                                        2
-                                                    </a>
-                                                </li>
-                                                <li className="page-item">
-                                                    <a href="#" className="page-link" aria-label="Next">
-                                                        <i className="ti-angle-right" />
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="more_place_btn text-center">
+                                                    <button className="boxed-btn4" onClick={() => this.setState({sizeItem : this.state.sizeItem + this.state.size})}>
+                                                        Xem thêm
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-4">

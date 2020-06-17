@@ -9,7 +9,7 @@ class ScheduleFilm extends Component {
             data: [],
             styleSelection: `color: "#f44a40", border: "1px solid #f44a40"`,
             indexCinema: "",
-            indexDate: this.getToday(),
+            indexDate: null,
             isRedirect: false
         }
     }
@@ -34,10 +34,19 @@ class ScheduleFilm extends Component {
     }
 
     loadSchedule = (cinema, date) => {
+        if(date === null){
+            date = this.getToday()
+            this.setState({ indexDate: date })
+        }
+        if(cinema !== this.state.indexCinema){
+            date = this.getToday()
+            this.setState({ indexDate: date })
+        }
         var schedule = {
             cinema: cinema,
             date: date
         }
+        console.log(schedule);
         this.getSchedule(schedule);
     }
 
@@ -86,18 +95,6 @@ class ScheduleFilm extends Component {
         var today = new Date();
         console.log("data");
         console.log(data);
-
-        // if (data.length == 0) {
-        //     return (
-        //         <div className="whole-wrap">
-        //             <div className="container box_1170">
-        //                 <div className="section-top-border">
-        //                     Vui lòng chọn rạp
-        //                     </div>
-        //             </div>
-        //         </div>
-        //     )
-        // }
 
         var listDate = [];
         for (var i = 0; i <= 4; i++) {
@@ -239,12 +236,12 @@ class ScheduleFilm extends Component {
             room: room,
             codeFilm: codeFilm,
             start: start,
-            idSeat : ""
+            idSeat : []
         }
-
+        console.log(item)
         var clientCurrent = {
             "username": client.username,
-            "token": client.type + " " + client.token,
+            "token": client.token,
             "schedule": {item}
         }
  
@@ -269,7 +266,7 @@ class ScheduleFilm extends Component {
                         <div className="row align-items-center">
                             <div className="col-lg-3">
                                 <div className="form_area">
-                                    <h3>Where you want to go?</h3>
+                                    <h3>Chọn rạp và chọn ngày giờ </h3>
                                 </div>
                             </div>
                             <div className="col-lg-9">

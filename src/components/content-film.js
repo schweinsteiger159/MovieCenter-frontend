@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { render } from 'ejs';
 import { Redirect, Route, Link, useLocation } from 'react-router-dom';
 
 import * as AppConstant from './contants/constants';
 import Alert from '@material-ui/lab/Alert';
+
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 class ContentFilm extends Component {
     constructor(props) {
         super(props)
         this.state = {
             film: null,
-            isRedirect: 0
+            isRedirect: 0,
+            sizeComment: 3,
+            indexComment: 0,
+            setOpenAlert: false
         }
     }
 
@@ -70,15 +76,21 @@ class ContentFilm extends Component {
                         action="#"
                         id="commentForm"
                         onSubmit={this.onSubmitComment}
+                        style={{paddingTop: 30}}
                     >
+                        <Snackbar open={this.state.setOpenAlert} autoHideDuration={6000} onClose={() =>this.handleClose()}>
+                            <Alert onClose={() => this.handleClose()} severity="success">
+                                Bình luận thành công
+                            </Alert>
+                        </Snackbar>
 
                         <div className="row">
-                            <div className="col-12">
+                            {/* <div className="col-12">
                                 <div className="form-group">
                                     <Alert icon={false} id="alert-success" severity="success" style={{ display: 'none' }}>Bình luận thành công</Alert>
                                     <Alert icon={false} id="alert-error" severity="error" style={{ display: 'none' }}>Xãy ra lỗi ! Vui lòng đăng nhập lại</Alert>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-12">
                                 <div className="form-group">
                                     <textarea
@@ -134,6 +146,18 @@ class ContentFilm extends Component {
             )
         }
     }
+    nextComment = () => {
+        if (this.state.indexComment + this.state.sizeComment < this.state.film.comments.length) {
+            this.setState({ indexComment: this.state.indexComment + this.state.sizeComment })
+        }
+
+    }
+
+    prevComment = () => {
+        if (this.state.indexComment > 0) {
+            this.setState({ indexComment: this.state.indexComment - this.state.sizeComment })
+        }
+    }
 
     onChangeInput = (e) => {
         var target = e.target;
@@ -165,23 +189,35 @@ class ContentFilm extends Component {
             .then(data => {
                 console.log(data);
                 if (data.code === 200) {
-                    document.getElementById("alert-success").style.display = "block";
-                    document.getElementById("alert-error").style.display = "none";
+                    // document.getElementById("alert-success").style.display = "block";
+                    // document.getElementById("alert-error").style.display = "none";
                     this.loadFilm();
-                    
+                    this.setState({setOpenAlert : true})
                 } else {
                     document.getElementById("alert-error").style.display = "block";
-                    
+
                 }
 
             })
             .catch(error => {
                 console.log(error)
-                document.getElementById("alert-error").style.display = "block";
-                document.getElementById("alert-success").style.display = "none";
+                // document.getElementById("alert-error").style.display = "block";
+                // document.getElementById("alert-success").style.display = "none";
                 // this.setState({ data: [{ null: null }] })
             });
     }
+
+    Alert = (props) => {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({ setOpenAlert: false })
+    };
 
     render() {
         console.log(this.state)
@@ -231,40 +267,67 @@ class ContentFilm extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="comments-area">
-                                <h4>{this.state.film.comments !== null ? this.state.film.comments.length + " Bình luận" : "Chưa có bình luận"}</h4>
+                            <div className="comments-area" style={{ borderTop: 'none', padding: 0 }}>
+                                <div class="d-flex align-items-center" style={{ paddingBottom: 20 }}>
+                                    <h5 style={{ fontSize: 20 }}>
+                                        {this.state.film.comments !== null ? this.state.film.comments.length + " Bình luận" : "Chưa ai bình luận"}
+                                    </h5>
+                                    <ul className="pagination">
+                                        <li className="page-item">
 
+                                            <a onClick={() => this.prevComment()}
+                                                style={{ cursor: 'pointer' }} className="page-link" aria-label="Previous" style={{ border: 'none' }}>
+                                                <i className="ti-angle-left" />
+                                            </a>
+                                        </li>
+
+                                        <li className="page-item">
+                                            <a onClick={() => this.nextComment()}
+                                                style={{ cursor: 'pointer' }} className="page-link" aria-label="Next" style={{ border: 'none' }}>
+                                                <i className="ti-angle-right" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 {
                                     this.state.film.comments !== null
                                         ?
                                         this.state.film.comments.map((i, k) => (
-                                            <>
-                                                <div className="comment-list">
-                                                    <div className="single-comment justify-content-between d-flex">
-                                                        <div className="user justify-content-between d-flex">
-                                                            
-                                                            <div className="desc">
-                                                                <p className="comment">
-                                                                    {i.content}
-                                                                </p>
-                                                                <div className="d-flex justify-content-between">
-                                                                    <div className="d-flex align-items-center">
-                                                                        <h5>
-                                                                            <a>
-                                                                                {i.username}
-                                                                            </a>
-                                                                        </h5>
-                                                                        <p className="date">
-                                                                            {i.createdAt}
-                                                                        </p>
+
+                                            this.state.indexComment + this.state.sizeComment > k && this.state.indexComment <= k
+                                                ?
+                                                <>
+
+                                                    <div className="comment-list">
+                                                        <div className="single-comment justify-content-between d-flex">
+                                                            <div className="user justify-content-between d-flex">
+
+                                                                <div className="desc">
+                                                                    <p className="comment">
+                                                                        {i.content}
+                                                                    </p>
+                                                                    <div className="d-flex justify-content-between">
+                                                                        <div className="d-flex align-items-center">
+                                                                            <h5>
+                                                                                <a>{i.username}</a>
+                                                                            </h5>
+                                                                            <p className="date">
+                                                                                {i.createdAt}
+                                                                            </p>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </>
+                                                </>
+                                                :
+                                                <>
+                                                </>
+
                                         ))
+
                                         :
                                         <>
                                         </>

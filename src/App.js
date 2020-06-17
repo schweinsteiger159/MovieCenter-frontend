@@ -13,14 +13,12 @@ import SelectSeat from './components/pages/select-seat';
 import Blog from './components/pages/blog';
 import BlogDetail from './components/pages/detail-blog';
 import SignUp from './components/pages/sign-up';
+import CheckOut from './components/pages/checkout';
 
 function App() {
 
   return (
     <Router>
-      
-      
-
       <Route exact path="/" component={Home}></Route>
       <Route path="/showing-movie" component={ShowingMovie}></Route>
       <Route path="/coming-movie" component={ComingMovie}></Route>
@@ -29,6 +27,7 @@ function App() {
       <Route path="/select-seat" component={SelectSeat}></Route>
       <Route path="/customer/login" component={Login}></Route>
       <Route path="/blog" component={Blog}></Route>
+      <Route path="/checkout" component={CheckOut}></Route>
       <Route exact path="/blog-detail" component={BlogDetail}></Route>
       <Route path='/customer/registration' component={SignUp}></Route>
 

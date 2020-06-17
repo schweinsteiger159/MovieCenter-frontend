@@ -18,6 +18,8 @@ class ContentBlog extends Component {
             blog: null,
             random: null,
             comment: null,
+            sizeComment: 3,
+            indexComment: 0,
         }
     }
 
@@ -35,6 +37,7 @@ class ContentBlog extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({ blog: data.data })
+
             })
             .catch(console.log)
         fetch(AppConstant.domainURL + '/api/blog/random/4')
@@ -43,6 +46,8 @@ class ContentBlog extends Component {
                 this.setState({ random: data })
             })
             .catch(console.log)
+
+
     }
 
     checkLoginToComment = () => {
@@ -76,7 +81,7 @@ class ContentBlog extends Component {
                                         placeholder="Write Comment"
                                         defaultValue={""}
                                         required
-                                        onChange={(e) => this.setState({comment : e.target.value})}
+                                        onChange={(e) => this.setState({ comment: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -147,7 +152,7 @@ class ContentBlog extends Component {
 
                 } else {
                     document.getElementById("alert-error").style.display = "block";
-                    
+
                 }
 
             })
@@ -158,6 +163,20 @@ class ContentBlog extends Component {
                 // this.setState({ data: [{ null: null }] })
             });
     }
+
+    nextComment = () => {
+        if (this.state.indexComment + this.state.sizeComment < this.state.blog.comments.length) {
+            this.setState({ indexComment: this.state.indexComment + this.state.sizeComment })
+        }
+
+    }
+
+    prevComment = () => {
+        if (this.state.indexComment > 0) {
+            this.setState({ indexComment: this.state.indexComment - this.state.sizeComment })
+        }
+    }
+
     render() {
         console.log(this.props.codeBlog)
         //loadBlog(codeBlog)
@@ -209,37 +228,66 @@ class ContentBlog extends Component {
 
                                     </div>
 
-                                    <div className="comments-area">
-                                        <h4>{item.comments !== null ? item.comments.length + " Bình luận" : "Chưa ai bình luận"}</h4>
+                                    <div className="comments-area" style={{ borderTop: 'none', padding: 0 }}>
+
+                                        <div class="d-flex align-items-center" style={{ paddingBottom: 20 }}>
+                                            <h5 style={{ fontSize: 20 }}>
+                                                {item.comments !== null ? item.comments.length + " Bình luận" : "Chưa ai bình luận"}
+                                            </h5>
+                                            <ul className="pagination">
+                                                <li className="page-item">
+
+                                                    <a onClick={() => this.prevComment()}
+                                                        style={{ cursor: 'pointer' }} className="page-link" aria-label="Previous" style={{ border: 'none' }}>
+                                                        <i className="ti-angle-left" />
+                                                    </a>
+                                                </li>
+
+                                                <li className="page-item">
+                                                    <a onClick={() => this.nextComment()}
+                                                        style={{ cursor: 'pointer' }} className="page-link" aria-label="Next" style={{ border: 'none' }}>
+                                                        <i className="ti-angle-right" />
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                         {
                                             item.comments !== null
                                                 ?
                                                 item.comments.map((i, k) => (
-                                                    <>
-                                                        <div className="comment-list">
-                                                            <div className="single-comment justify-content-between d-flex">
-                                                                <div className="user justify-content-between d-flex">
 
-                                                                    <div className="desc">
-                                                                        <p className="comment">
-                                                                            {i.content}
-                                                                        </p>
-                                                                        <div className="d-flex justify-content-between">
-                                                                            <div className="d-flex align-items-center">
-                                                                                <h5>
-                                                                                    <a>{i.username}</a>
-                                                                                </h5>
-                                                                                <p className="date">
-                                                                                    {i.createdAt}
-                                                                                </p>
+                                                    this.state.indexComment + this.state.sizeComment > k && this.state.indexComment <= k
+                                                        ?
+                                                        <>
+
+                                                            <div className="comment-list">
+                                                                <div className="single-comment justify-content-between d-flex">
+                                                                    <div className="user justify-content-between d-flex">
+
+                                                                        <div className="desc">
+                                                                            <p className="comment">
+                                                                                {i.content}
+                                                                            </p>
+                                                                            <div className="d-flex justify-content-between">
+                                                                                <div className="d-flex align-items-center">
+                                                                                    <h5>
+                                                                                        <a>{i.username}</a>
+                                                                                    </h5>
+                                                                                    <p className="date">
+                                                                                        {i.createdAt}
+                                                                                    </p>
+                                                                                </div>
+
                                                                             </div>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </>
+                                                        </>
+                                                        :
+                                                        <>
+                                                        </>
+
                                                 ))
 
                                                 :
@@ -248,10 +296,9 @@ class ContentBlog extends Component {
                                         }
 
 
-
                                     </div>
-                                    <div className="comment-form">
-                                        <h4>Bình luận chém gió</h4>
+                                    <div className="comment-form" style={{ borderTop: "0px", paddingTop: 0, marginTop: 0 }}
+                                    >
                                         {this.checkLoginToComment()}
                                     </div>
                                 </div>
