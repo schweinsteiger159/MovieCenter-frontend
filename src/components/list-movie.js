@@ -35,7 +35,7 @@ const ListMovie = (props) => {
                                     <div className="rating_days d-flex justify-content-between">
                                         <span className="d-flex justify-content-center align-items-center">
                                            
-                                            <a href="#">(20 Review)</a>
+                                            <a href="#"><i className="fa fa-comments" /> ({film.comments === null ? "0" : film.comments.length} Bình luận)</a>
                                         </span>
                                         <div className="days">
                                             {film.dateShow}

@@ -117,6 +117,11 @@ class Header extends Component {
                                                                 Blog
                                                             </Link>
                                                         </li>
+                                                        <li>
+                                                            <Link className="" to="/coupon">
+                                                                Khuyến mãi
+                                                            </Link>
+                                                        </li>
 
                                                     </ul>
                                                 </nav>

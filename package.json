@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "-": "0.0.1",
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
@@ -15,11 +16,15 @@
     "express": "^4.17.1",
     "html-react-parser": "^0.13.0",
     "react": "^16.13.1",
+    "react-async-script-loader": "^0.3.0",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-paypal-button-v2": "^2.6.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-tabs": "^3.1.0"
+    "react-spinners": "^0.8.3",
+    "react-tabs": "^3.1.0",
+    "save": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

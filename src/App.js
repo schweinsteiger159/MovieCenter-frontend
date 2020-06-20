@@ -14,6 +14,7 @@ import Blog from './components/pages/blog';
 import BlogDetail from './components/pages/detail-blog';
 import SignUp from './components/pages/sign-up';
 import CheckOut from './components/pages/checkout';
+import Coupon from './components/pages/coupon';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
       <Route path="/customer/login" component={Login}></Route>
       <Route path="/blog" component={Blog}></Route>
       <Route path="/checkout" component={CheckOut}></Route>
+      <Route path="/coupon" component={Coupon}></Route>
       <Route exact path="/blog-detail" component={BlogDetail}></Route>
       <Route path='/customer/registration' component={SignUp}></Route>
 

@@ -181,7 +181,8 @@ class ContentFilm extends Component {
         fetch(AppConstant.domainURL + '/api/film/comment/' + this.state.film.codeFilm, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': client.token
             },
             body: JSON.stringify(item)
         })

@@ -4,7 +4,7 @@ export const saveUser = (nameLocalStorage, data) =>{
     var clientInfor = {
         "username" : data.username,
         "token" : data.type + " " + data.token,
-        "schedule" : {}
+        "schedule" : null
     }
     
     localStorage.setItem(nameLocalStorage, JSON.stringify(clientInfor));

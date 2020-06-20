@@ -138,7 +138,8 @@ class ContentBlog extends Component {
         fetch(AppConstant.domainURL + '/api/blog/comment/' + this.props.codeBlog, {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': client.token
             },
             body: JSON.stringify(item)
         })

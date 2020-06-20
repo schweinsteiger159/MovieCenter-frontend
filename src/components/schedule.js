@@ -203,10 +203,10 @@ class ScheduleFilm extends Component {
 
                                                                 if (timeNowDate < timeScheduleDate) {
                                                                     return (
-                                                                        <p class="genric-btn primary-border radius"
+                                                                        <Link class="genric-btn primary-border radius" to="/select-seat"
                                                                             onClick={() => this.saveSelectPosition(this.state.indexCinema, j.room.code, i.film.codeFilm, j.start)}>
                                                                             {dateTime[1]}<span
-                                                                                class="lnr lnr-arrow-right"></span></p>
+                                                                                class="lnr lnr-arrow-right"></span></Link>
 
                                                                     )
                                                                 }
