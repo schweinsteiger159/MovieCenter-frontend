@@ -13,6 +13,9 @@ import SelectSeat from './components/pages/select-seat';
 import Blog from './components/pages/blog';
 import BlogDetail from './components/pages/detail-blog';
 import SignUp from './components/pages/sign-up';
+import Profile from './components/pages/profile';
+import ChangePassword from './components/pages/change-password';
+import ForgotPassword from './components/pages/forgot-password';
 import CheckOut from './components/pages/checkout';
 import Coupon from './components/pages/coupon';
 
@@ -32,7 +35,9 @@ function App() {
       <Route path="/coupon" component={Coupon}></Route>
       <Route exact path="/blog-detail" component={BlogDetail}></Route>
       <Route path='/customer/registration' component={SignUp}></Route>
-
+      <Route path='/customer/profile' component={Profile}></Route>
+      <Route path='/changePassword' component={ChangePassword}></Route>
+      <Route path="/forgotPassword" component={ForgotPassword}></Route>
       
     </Router>
 

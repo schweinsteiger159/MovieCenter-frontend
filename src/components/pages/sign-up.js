@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,8 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container'
 import MenuItem from '@material-ui/core/MenuItem';
+import Alert from '@material-ui/lab/Alert';
 import Header from '../header';
 import Footer from '../footer';
+import axios from 'axios';
+import * as AppConstant from '../contants/constants';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,10 +55,18 @@ class SignUp extends Component {
 	constructor(props) {
     super(props);
     this.state = {
+      firstName: '',
+      lastName: '',
+      userName: '',
+      password: '',
+      confirmPassword: '',
+      email: '',
+      phoneNumber: '',
       gender : '',
-      dob : ''
+      dob : '',
+      isCreated: false,
+      isMatches: false
     }
-
   }
   
   handleChange = (event) => {
@@ -66,8 +78,72 @@ class SignUp extends Component {
     })
   };
 
+  handleConfirmPassword = (event) => {
+    var target = event.target;
+    var name = target.name;
+    var value = target.value;
+    this.setState({
+      [name]: value
+    });
+    console.log("Password: ", this.state.password);
+    console.log("Confirm Password: ", this.state.confirmPassword);
+    if (this.state.password === this.state.confirmPassword) {
+      //this.state.isMatches = { isMatches : true };
+      this.setState({ isMatches : true });
+      console.log("Matches... ", this.state.isMatches);
+    } else {
+      //this.state.isMatches = { isMatches : false };
+      this.setState({ isMatches : false });
+      console.log("Not matches... ", this.state.isMatches);
+    }
+  }
+
+  handleCreateAccount = (e) => {
+    e.preventDefault();
+    var account = {
+      "userName" : this.state.userName,
+      "password" : this.state.password,
+      "firstName" : this.state.firstName,
+      "lastName" : this.state.lastName,
+      "email" : this.state.email,
+      "phoneNumber" : this.state.phoneNumber,
+      "gender" : this.state.gender,
+      "dayOfBirth" : this.state.dob
+    }
+    console.log("Preparing data to create account " + account)
+    this.createAccount(account);
+  }
+
+  createAccount(account) {
+    axios({
+      method: 'POST',
+      url: AppConstant.domainURL + "/accounts/create",
+      data: account,
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(function (res) {
+        console.log(res)
+        this.setState({ isCreated: true })
+      }.bind(this))
+      .catch(function (err) {
+        console.log(err);
+        this.setState({ errorMessage: true })
+      }.bind(this));
+  }
+
 	render() {
     window.scrollTo(0, 0)
+
+    if (this.state.isCreated) {
+      return (
+        <Redirect to={{
+            pathname: '/customer/login',
+            state: { isCreated: true }
+          }}
+        />
+      )
+    }
+
 		return (
 			<>
 				<Header></Header>
@@ -75,18 +151,20 @@ class SignUp extends Component {
         <Container component="main" maxWidth="md">
           <CssBaseline />
           <div className={useStyles.paper}>
-            {/* <Avatar className={useStyles.avatar}>
-              <LockOutlinedIcon />
-            </Avatar> */}
             <Typography component="h1" variant="h5">
               Đăng ký tài khoản
             </Typography>
             <br></br>
-            <form className={useStyles.form} noValidate>
+            <form className={useStyles.form} onSubmit={this.handleCreateAccount}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <TextField autoComplete="fname" name="firstName" variant="outlined" required fullWidth
-                    id="firstName" label="Tên" autoFocus size="small"
+                  <TextField 
+                    autoComplete="fname" 
+                    name="firstName" id="firstName" 
+                    required fullWidth autoFocus
+                    label="Tên" 
+                    size="small"  variant="outlined"
+                    onChange={this.handleChange} 
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -98,7 +176,7 @@ class SignUp extends Component {
                     label="Họ"
                     name="lastName"
                     autoComplete="lname"
-                    size="small"
+                    size="small" onChange={this.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -110,7 +188,7 @@ class SignUp extends Component {
                     label="Tên hiển thị"
                     name="userName"
                     autoComplete="username"
-                    size="small"
+                    size="small" onChange={this.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -121,8 +199,9 @@ class SignUp extends Component {
                     id="email"
                     label="Email"
                     name="email"
+                    type="email"
                     autoComplete="email"
-                    size="small"
+                    size="small" onChange={this.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -134,13 +213,18 @@ class SignUp extends Component {
                     label="Số điện thoại"
                     name="phoneNumber"
                     autoComplete="phone-number"
-                    size="small"
+                    size="small" onChange={this.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    variant="outlined" select required fullWidth id="gender" label="Giới tính" autoComplete="gender"
-                    helperText="Bạn là nam hay nữ" name="gender" size="small" onChange={this.handleChange}                   
+                    select required fullWidth 
+                    id="gender" name="gender"
+                    label="Giới tính"
+                    autoComplete="gender"
+                    helperText="Bạn là nam hay nữ" 
+                    size="small" variant="outlined" 
+                    onChange={this.handleChange}                   
                   >
                     {genders.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -151,56 +235,56 @@ class SignUp extends Component {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    variant="outlined"
                     type="date"
-                    required
-                    fullWidth
-                    id="dob"
+                    required fullWidth
                     label="Ngày sinh"
-                    name="dob"
+                    name="dob" id="dob"
                     autoComplete="dob"
-                    size="small"
+                    size="small" variant="outlined"
+                    onChange={this.handleChange}
                     InputLabelProps={{
                       shrink: true,
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Mật khẩu"
+                  <TextField 
+                    required fullWidth 
+                    name="password" id="password"
+                    label="Mật khẩu" 
                     type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    size="small"
+                    autoComplete="current-password" 
+                    variant="outlined" size="small" 
+                    onChange={this.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="confirmPassword"
+                  <TextField required fullWidth 
+                    name="confirmPassword" id="confirmPassword" 
+                    type="password" 
                     label="Xác nhận mật khẩu"
-                    type="password"
-                    id="confirmPassword"
+                    onChange={this.handleConfirmPassword}  
                     autoComplete="confirm-password"
-                    size="small"
+                    size="small" variant="outlined" 
+                    error helperText="Xác nhận mật khẩu không thành công!"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="Tôi muốn nhận thông báo mới nhất về chương trình khuyễn mãi qua email"
+                    onChange={this.handleChange}
                   />
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
                 <Grid item xs={2}>
-                  <Button type="submit" variant="contained" color="primary" className={useStyles.submit}>
+                  <Button 
+                    type="submit" 
+                    variant="contained" 
+                    color="primary" 
+                    className={useStyles.submit}
+                  >
                     Đăng ký
                   </Button>
                 </Grid>

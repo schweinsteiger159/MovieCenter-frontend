@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import qs from 'querystring';
 import * as AppConstant from '../contants/constants';
 import Header from '../header';
 import Footer from '../footer';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class Login extends Component {
     constructor(props) {
@@ -14,8 +19,10 @@ class Login extends Component {
             username: "",
             password: "",
             errorMessage: false,
-            isRedirect : false
+            isRedirect : false,
+            open: false
         }
+        this.handleOpen();
     }
 
     onChange = (e) => {
@@ -63,6 +70,22 @@ class Login extends Component {
             return (<p style={{ color: "red" }}>* Tài khoản và mật khẩu không đúng</p>)
         }
     }
+
+    handleOpen = (open) => {
+      if (this.props.location.state === undefined) {
+        return false;
+      } else if (this.props.location.state.isCreated) {
+          this.state.open = { isCreated : true } 
+      }
+    };
+
+    handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      this.setState({ open : false })
+    };
+
     render() {
         console.log("123")
         window.scrollTo(0, 0)
@@ -99,6 +122,11 @@ class Login extends Component {
                                 <div className="col-md-3">
                                     <img src="../assets/img/upload/cinema.jpg" alt className="img-fluid" />
                                 </div>
+                                <Snackbar open={this.state.open} autoHideDuration={5000} onClose={this.handleClose}>
+                                  <Alert onClose={this.handleClose} severity="success">
+                                    Đăng ký tài khoản thành công!
+                                  </Alert>
+                                </Snackbar>
                                 <div className="col-md-9 mt-sm-20">
                                 <h4>{this.validateForm(this.state.errorMessage)}</h4>
                                     <form onSubmit={this.onLogin}
@@ -137,9 +165,16 @@ class Login extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group mt-3">
-                                            <button type="submit" className="button button-contactForm boxed-btn">
-                                                Đăng nhập
-                                            </button>
+                                          <div className="row">
+                                            <div className="col-sm-3">
+                                              <button type="submit" className="button button-contactForm boxed-btn" >
+                                                  Đăng nhập
+                                              </button>
+                                            </div>                                            
+                                            <div className="col-sm-6">
+                                              <a href="/forgotPassword">Quên mật khẩu?</a>
+                                            </div>
+                                          </div>
                                         </div>
                                     </form>
                                 </div>
