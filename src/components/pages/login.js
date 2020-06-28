@@ -92,7 +92,7 @@ class Login extends Component {
         console.log(this.state)
         if(this.state.isRedirect){
             var {location} = this.props;
-            if(location.state == undefined){
+            if(location.state === undefined){
                return(
                 <Redirect to="/" />
                )

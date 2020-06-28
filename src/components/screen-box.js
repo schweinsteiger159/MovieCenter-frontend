@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as AppConstant from '../components/contants/constants'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import parse from 'html-react-parser';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 class ScreenBox extends Component {
     constructor(props) {
         super(props);
@@ -14,23 +14,29 @@ class ScreenBox extends Component {
     }
 
     componentDidMount() {
+        var client = JSON.parse(localStorage.getItem("client"));
+        if (client == null) {
+            return (
+                <Redirect to="/customer/login" />
+            )
+        }
         this.loadSchedule();
         document.addEventListener('mousedown', this.handleClick);
 
         var client = JSON.parse(localStorage.getItem("client"));
-            var item = {
-                cinema: client.schedule.item.cinema,
-                room: client.schedule.item.room,
-                codeFilm: client.schedule.item.codeFilm,
-                start: client.schedule.item.start,
-                idSeat: []
-            }
-            var clientCurrent = {
-                "username": client.username,
-                "token": client.token,
-                "schedule": { item }
-            }
-            localStorage.setItem("client", JSON.stringify(clientCurrent));
+        var item = {
+            cinema: client.schedule.item.cinema,
+            room: client.schedule.item.room,
+            codeFilm: client.schedule.item.codeFilm,
+            start: client.schedule.item.start,
+            idSeat: []
+        }
+        var clientCurrent = {
+            "username": client.username,
+            "token": client.token,
+            "schedule": { item }
+        }
+        localStorage.setItem("client", JSON.stringify(clientCurrent));
     }
     loadSchedule = () => {
         var client = JSON.parse(localStorage.getItem("client"));
@@ -112,9 +118,9 @@ class ScreenBox extends Component {
     handleClick = (e) => {
         var target = e.target;
         console.log(target)
-        if(typeof target.className === 'object'){
+        if (typeof target.className === 'object') {
             console.log("object")
-        }else{
+        } else {
             var value = target.type === 'checkbox' ? target.checked : target.value;
             var detect = target.className.split(" ");
             if (value && detect.includes("select-seat")) {
@@ -122,7 +128,7 @@ class ScreenBox extends Component {
                 document.getElementById(value).disabled = true
                 document.getElementById(value).style.backgroundColor = 'black'
                 this.setState({ selectSeat: this.state.selectSeat.add(value) })
-    
+
                 var client = JSON.parse(localStorage.getItem("client"));
                 var item = {
                     cinema: client.schedule.item.cinema,
@@ -139,7 +145,7 @@ class ScreenBox extends Component {
                 localStorage.setItem("client", JSON.stringify(clientCurrent));
             }
         }
-        
+
 
     }
 
@@ -167,6 +173,12 @@ class ScreenBox extends Component {
     }
 
     render() {
+        var client = JSON.parse(localStorage.getItem("client"));
+        if (client == null) {
+            return (
+                <Redirect to="/customer/login" />
+            )
+        }
         console.log(this.state)
         var positionSeat = "";
         if (this.state.schedule !== null) {

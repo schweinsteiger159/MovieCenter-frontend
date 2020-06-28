@@ -33,7 +33,9 @@ class Payment extends Component {
             setTypeAlert: null,
             setMessageAlert: null,
 
-            showPaypal: false
+            showPaypal: false,
+
+            isPayment: false,
         }
     }
 
@@ -233,10 +235,12 @@ class Payment extends Component {
         var client = JSON.parse(localStorage.getItem("client"));
         var price = Math.ceil(parseFloat(this.state.priceCurrent) * 0.000043);
         console.log(price)
-        const { showPaypal } = this.state;
-        if (showPaypal) {
-            return <PaypalButtons />;
-        } else
+        
+        if(this.state.isPayment){
+            return(
+                <h1>Thanh toán thành công</h1>
+            )
+        }else{
             if (this.state.data !== null && client.schedule !== null) {
                 var datetime = this.state.data.start.split(" ");
                 return (
@@ -323,12 +327,12 @@ class Payment extends Component {
                                             // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                                             onSuccess={(details, data) => {
                                                 alert("Transaction completed by " + details.payer.name.given_name);
-
+    
                                                 // OPTIONAL: Call your server to save the transaction
                                                 console.log("submit")
                                                 var client = JSON.parse(localStorage.getItem("client"));
                                                 var check = true;
-
+    
                                                 var item = {
                                                     username: client.username,
                                                     gmail: this.state.gmail,
@@ -341,8 +345,8 @@ class Payment extends Component {
                                                     price: this.state.priceCurrent,
                                                 }
                                                 console.log(item)
-
-
+    
+    
                                                 return fetch(AppConstant.domainURL + '/api/bill/add', {
                                                     method: "POST",
                                                     headers: {
@@ -364,7 +368,8 @@ class Payment extends Component {
                                                             this.setState({
                                                                 setOpenAlert: true,
                                                                 setTypeAlert: "success",
-                                                                setMessageAlert: "Đặt vé thành công"
+                                                                setMessageAlert: "Đặt vé thành công",
+                                                                isPayment : true
                                                             })
                                                         } else {
                                                             this.setState({
@@ -373,7 +378,7 @@ class Payment extends Component {
                                                                 setMessageAlert: "Xãy ra lỗi, vui lòng đặt nhập lại"
                                                             })
                                                         }
-
+    
                                                     })
                                                     .catch(error => {
                                                         console.log(error)
@@ -449,13 +454,13 @@ class Payment extends Component {
                                                 </tr>
                                             </tbody>
                                         </table>
-
-
+    
+    
                                     </div>
                                 </div>
                             </div>
                         </section>
-
+    
                     </>
                 )
             } else {
@@ -463,6 +468,10 @@ class Payment extends Component {
                     <h1>Bạn chưa chọn lịch chiếu</h1>
                 )
             }
+        }
+
+        
+            
 
     }
 }

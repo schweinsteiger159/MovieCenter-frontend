@@ -34,11 +34,11 @@ class ScheduleFilm extends Component {
     }
 
     loadSchedule = (cinema, date) => {
-        if(date === null){
+        if (date === null) {
             date = this.getToday()
             this.setState({ indexDate: date })
         }
-        if(cinema !== this.state.indexCinema){
+        if (cinema !== this.state.indexCinema) {
             date = this.getToday()
             this.setState({ indexDate: date })
         }
@@ -231,33 +231,46 @@ class ScheduleFilm extends Component {
 
     saveSelectPosition = (cinema, room, codeFilm, start) => {
         var client = JSON.parse(localStorage.getItem("client"));
-        var item = {
-            cinema: cinema,
-            room: room,
-            codeFilm: codeFilm,
-            start: start,
-            idSeat : []
+        if(client !== null){
+            var item = {
+                cinema: cinema,
+                room: room,
+                codeFilm: codeFilm,
+                start: start,
+                idSeat: []
+            }
+            console.log(item)
+            var clientCurrent = {
+                "username": client.username,
+                "token": client.token,
+                "schedule": { item }
+            }
+    
+            localStorage.setItem("client", JSON.stringify(clientCurrent));
+    
+            console.log(cinema + " " + room + " " + codeFilm + " " + start);
+    
+            
+            console.log("123")
         }
-        console.log(item)
-        var clientCurrent = {
-            "username": client.username,
-            "token": client.token,
-            "schedule": {item}
-        }
- 
-        localStorage.setItem("client", JSON.stringify(clientCurrent));
-
-        console.log(cinema + " " + room + " " + codeFilm + " " + start);
+        this.setState({ isRedirect: true })
         
-        this.setState({isRedirect : true})
-        console.log("123")
     }
     render() {
         console.log(this.state)
-        if(this.state.isRedirect){
-            return(
-                <Redirect to="/select-seat"/>
-            )
+        var client = JSON.parse(localStorage.getItem("client"));
+        console.log(client);
+        if (this.state.isRedirect) {
+            if (client == null) {
+                return (
+                    <Redirect to="/customer/login" />
+                )
+            } else {
+                return (
+                    <Redirect to="/select-seat" />
+                )
+            }
+
         }
         return (
             <>
