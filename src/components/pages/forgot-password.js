@@ -46,8 +46,10 @@ class ForgotPassword extends Component {
       username : '',
       errorMessage: '',
       isSent : false,
-      isLoading : false
+      isLoading : false,
+      isLogin: false
     }
+    this.isLogin();
   }
 
   handleChange = (event) => {
@@ -81,7 +83,22 @@ class ForgotPassword extends Component {
       }.bind(this));
   }
 
+  isLogin = () => {
+    var user = JSON.parse(localStorage.getItem("client"));
+    if (user === null) {
+      this.state.isLogin = false;
+    } else {
+        this.state.isLogin = true;
+    }
+  }
+
   render() {
+
+    if (this.state.isLogin) {
+      return (
+        <Redirect to="/"/>
+      );
+    }
 
     if (this.state.isLoading) {
       return (

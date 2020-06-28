@@ -32,15 +32,20 @@ class Header extends Component {
         } else {
             return (
                 <ul>
-                    <li>
-                        {user.username}
-                    </li>
-                    <li>
-                        <a href="#" onClick={this.handleShow}>
-                            Đăng xuất
-                        </a>
-                    </li>
-
+                  <li>
+                    <Link to={{
+                      pathname: "/customer/profile",
+                      state: { username: user.username }
+                      }}
+                    >
+                      {user.username}
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="#" onClick={this.handleShow}>
+                      Đăng xuất
+                    </a>
+                  </li>
                 </ul>
             )
         }

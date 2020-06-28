@@ -1,72 +1,336 @@
 import React, { Component } from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import FolderIcon from "@material-ui/icons/Folder";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Avatar from "@material-ui/core/Avatar";
+import ColorizeIcon from '@material-ui/icons/Colorize';
+import DehazeIcon from '@material-ui/icons/Dehaze';
+import { Redirect } from 'react-router-dom';
+import {
+  makeStyles,
+  Typography,
+  CssBaseline,
+  Grid,
+  Container,
+  Chip,
+  Divider,
+  Button,
+  Card,
+  CardContent,
+  Tooltip,
+  Fab
+} from '@material-ui/core';
 
 import Header from "../header";
 import Footer from "../footer";
+import * as AppConstant from '../contants/constants';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(2, 0, 2),
+  },
+  chip:  {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  card: {
+    minWidth: 375
+  }
+}));
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "recents",
+      username : null,
+      account: null
     };
+    this.isLogin();
+    console.log("Username ===> ", this.state.username);
   }
 
-  handleChange = (event, newValue) => {
-    this.setState({ value: newValue });
-  };
+  componentDidMount(){
+    window.scrollTo(0, 0)
+    this.retrieveDataAccount();
+  }
+
+  retrieveDataAccount = () => {
+    fetch(AppConstant.domainURL + '/accounts/' + this.state.username)
+    .then(res => res.json())
+    .then(dataAccount => {
+      console.log("Account Info ===> ", dataAccount)
+      this.setState({ account: dataAccount })
+    })
+    .catch(console.log)
+  }
+
+  isLogin() {
+    var user = JSON.parse(localStorage.getItem("client"));
+    if (user === null) {
+      this.state.username = undefined;
+    } else {
+      this.state.username = user.username;
+    }
+  }
 
   render() {
-    return (
-      <>
-        <Header></Header>
+    console.log("State ===> ", this.state);
+    if (this.state.username === null || this.state.username === undefined) {
+      return (
+        <Redirect to="/customer/login" />
+      );
+    }
 
-        {/* <div 
-          className="page-header header-filter" 
-          data-parallax="true" 
-          style="background-image: url('../assets/img/city-profile.jpg');"
-        >
-        </div>
-
-        <div className="main main-raised">
-          <div className="profile-content">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6 ml-auto mr-auto">
-                  <div className="profile">
-                    <div className="avatar">
-                      <img 
-                        src="../assets/img/faces/christian.jpg" 
-                        alt="Circle Image" 
-                        className="img-raised rounded-circle img-fluid"
-                      />
-                    </div>
-                    <div className="name">
-                      <h3 className="title">Hung Le</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    if (this.state.account !==  null) {
+      return (
+        <>
+          <Header></Header>
+  
+          <Container component="main" maxWidth="md">
+            <CssBaseline />
+            <div className={useStyles.paper}>
+              <Typography 
+                component="h1" 
+                variant="h5"
+              >
+                Hồ sơ
+              </Typography>
+              <br></br>
+              <Divider />
+  
+              <Card className={useStyles.card}>
+                <CardContent>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={9}>
+                      <Tooltip title="Chi tiết">
+                        <Fab
+                          variant="round"
+                          color="primary"
+                          size="large"
+                        >
+                          <DehazeIcon />
+                        </Fab>
+                      </Tooltip>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                      <Tooltip title="Sửa đổi thông tin" arrow>
+                        <Button 
+                          variant="outlined"
+                          color="primary"
+                          className={useStyles.button}                       
+                          startIcon={<ColorizeIcon />}
+                        >
+                          Tùy chỉnh
+                        </Button>
+                      </Tooltip>              
+                    </Grid>
+  
+                    <Grid item xs={12} sm={3}>
+                      <Divider />
+                      <br></br>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Tên tài khoản hay tên đăng nhập">
+                          <Chip 
+                            variant="outlined" 
+                            color="primary"
+                            label="Tên tài khoản"
+                          />
+                        </Tooltip>
+                      </div>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Divider />
+                      <br></br>
+                      <div>
+                        <Typography 
+                          component="h6" 
+                          variant="h6"                    
+                        >
+                          {this.state.account.userName}
+                        </Typography>
+                      </div>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+                    
+                    <Grid item xs={12} sm={3}>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Họ và tên">
+                          <Chip 
+                            variant="outlined"
+                            color="primary"                
+                            label="Tên"
+                          />
+                        </Tooltip>
+                      </div> 
+                      <br></br>
+                      <Divider />
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Typography 
+                        component="h6" 
+                        variant="h6"                   
+                      >
+                        {this.state.account.fullName}
+                      </Typography>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+  
+                    <Grid item xs={12} sm={3}>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Email đăng ký tài khoản">
+                          <Chip 
+                            variant="outlined"
+                            color="primary"                
+                            label="Email"
+                          />
+                        </Tooltip>
+                      </div>
+                      <br></br>
+                      <Divider />     
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Typography 
+                        component="h6" 
+                        variant="h6"                   
+                      >
+                        {this.state.account.email}
+                      </Typography>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+  
+                    <Grid item xs={12} sm={3}>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Số điện thoại đăng ký tài khoản">
+                          <Chip 
+                            variant="outlined"
+                            color="primary"                
+                            label="Số điện thoại"
+                          />
+                        </Tooltip>
+                      </div>
+                      <br></br>
+                      <Divider />     
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Typography 
+                        component="h6" 
+                        variant="h6"                   
+                      >
+                        {this.state.account.phoneNumber}
+                      </Typography>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+  
+                    <Grid item xs={12} sm={3}>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Giới tính">
+                          <Chip 
+                            variant="outlined"
+                            color="primary"                
+                            label="Giới tính"
+                          />
+                        </Tooltip>
+                      </div>
+                      <br></br>
+                      <Divider />     
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Typography 
+                        component="h6" 
+                        variant="h6"                   
+                      >
+                        {this.state.account.gender}
+                      </Typography>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+  
+                    <Grid item xs={12} sm={3}>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Ngày tháng năm sinh">
+                          <Chip 
+                            variant="outlined"
+                            color="primary"                
+                            label="Ngày sinh"
+                          />
+                        </Tooltip>
+                      </div>
+                      <br></br>
+                      <Divider />     
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Typography 
+                        component="h6" 
+                        variant="h6"                   
+                      >
+                        {(this.state.account.dayOfBirth === null) || (this.state.account.dayOfBirth === "") 
+                          ? "Not Available" : this.state.account.dayOfBirth}
+                      </Typography>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+  
+                    <Grid item xs={12} sm={3}>
+                      <div className={useStyles.chip}>
+                        <Tooltip title="Điểm tích lũy">
+                          <Chip 
+                            variant="outlined"
+                            color="primary"                
+                            label="Điểm tích lũy"
+                          />
+                        </Tooltip>
+                      </div>
+                      <br></br>
+                      <Divider />      
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                      <Typography 
+                        component="h6" 
+                        variant="h6"                   
+                      >
+                        {this.state.account.accumulatedPoints === null ? 0 : this.state.account.accumulatedPoints}
+                      </Typography>
+                      <br></br>
+                      <Divider />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
             </div>
-          </div>
-        </div> */}
-
-        <Footer></Footer>
-      </>
-    );
+          </Container>
+          <br></br>
+          
+          <Footer></Footer>
+        </>
+      );
+    } else {
+      return (
+        <h1>Loading data</h1>
+      );
+    } 
   }
 }
 
