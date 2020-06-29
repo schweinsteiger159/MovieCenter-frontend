@@ -25,7 +25,7 @@ class ComingMovie extends Component{
     
                 <ListMovie films={this.state.films}  typeFilm="COMING"/>
     
-                <Footer></Footer>
+                
             </>
         )
     }

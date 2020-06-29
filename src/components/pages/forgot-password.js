@@ -173,7 +173,7 @@ class ForgotPassword extends Component {
         </Container>
         <br></br>
 
-        <Footer />
+      
       </>
     );
   }

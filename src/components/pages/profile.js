@@ -323,7 +323,7 @@ class Profile extends Component {
           </Container>
           <br></br>
           
-          <Footer></Footer>
+       
         </>
       );
     } else {

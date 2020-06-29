@@ -17,7 +17,6 @@ class Blog extends Component{
             <>
             <Header></Header>
             <ListBlog ></ListBlog>
-            <Footer></Footer>
             </>
         )
     }

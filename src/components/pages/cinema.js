@@ -31,7 +31,7 @@ class Cinema extends Component {
                 <Header></Header>
                 {/* <BradcamArea title="Cinema" text="life is yourself" image="download.png"></BradcamArea> */}
                 <ScheduleFilm cinema={this.state.data}></ScheduleFilm>
-                <Footer></Footer>
+                
             </>
         )
     }

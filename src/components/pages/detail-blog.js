@@ -28,7 +28,7 @@ class DetailBlog extends Component {
 
                 <ContentBlog codeBlog={query.get("code")} location={this.props.location}/>
 
-                <Footer></Footer>
+                
             </>
         )
     }

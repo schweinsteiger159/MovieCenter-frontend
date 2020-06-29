@@ -10,7 +10,7 @@ class Coupon extends Component {
             <>
             <Header></Header>
             <ListCoupon></ListCoupon>
-            <Footer></Footer>
+            
             </>
         )
     }

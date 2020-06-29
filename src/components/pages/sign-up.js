@@ -299,7 +299,7 @@ class SignUp extends Component {
         </Container>
         <br></br>
 
-				<Footer></Footer>
+		
 			</>
 		)
 	}

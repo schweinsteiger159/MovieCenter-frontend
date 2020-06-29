@@ -10,7 +10,7 @@ class SelectSeat extends Component{
                 <Header></Header>
 
                 <ScreenBox></ScreenBox>
-                <Footer></Footer>
+                
             </>
         )
     }

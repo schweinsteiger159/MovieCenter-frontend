@@ -20,7 +20,7 @@ class DetailFilm extends Component{
 
             <ContentFilm codeFilm ={this.props.match.params.id} location={this.props.location}/>
             
-            <Footer></Footer>
+           
             </>
         )
     }

@@ -225,7 +225,7 @@ class ChangePassword extends Component {
           </div>
         </Container>
         <br></br>
-        <Footer />
+        
       </>
     );
   }

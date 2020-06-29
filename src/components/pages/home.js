@@ -14,7 +14,7 @@ class Home extends Component{
             <Header></Header>
             <Slider></Slider>
             <MainHome></MainHome>
-            <Footer></Footer>
+            
             </>
         )
     }

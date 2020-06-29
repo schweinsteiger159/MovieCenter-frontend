@@ -16,7 +16,7 @@ class CheckOut extends Component{
             <>
             <Header></Header>
             <Payment></Payment>
-            <Footer></Footer>
+            
             </>
         )
     }

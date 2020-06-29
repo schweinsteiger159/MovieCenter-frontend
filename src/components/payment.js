@@ -9,10 +9,19 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Alert from '@material-ui/lab/Alert';
 
-import PaypalButtons from '../components/PaypalButton';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { PayPalButton } from "react-paypal-button-v2";
 
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        zIndex: 999999,
+        color: '#fff',
+    },
+}));
 class Payment extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +45,8 @@ class Payment extends Component {
             showPaypal: false,
 
             isPayment: false,
+
+            openLoading: false,
         }
     }
 
@@ -169,6 +180,7 @@ class Payment extends Component {
     }
 
     onSubmitPayment = (e) => {
+
         e.preventDefault();
         console.log("submit")
         var client = JSON.parse(localStorage.getItem("client"));
@@ -235,23 +247,107 @@ class Payment extends Component {
         var client = JSON.parse(localStorage.getItem("client"));
         var price = Math.ceil(parseFloat(this.state.priceCurrent) * 0.000043);
         console.log(price)
-        
-        if(this.state.isPayment){
-            return(
-                <h1>Thanh toán thành công</h1>
+
+        if (this.state.isPayment && this.state.data !== null && client.schedule !== null) {
+            var datetime = this.state.data.start.split(" ");
+            return (
+                <section className="contact-section">
+                    <div className="container">
+
+                        <div className="row">
+                            
+                            <div className="col-12">
+                                <h2 className="contact-title">Thông tin chi tiết</h2>
+                            </div>
+                            <div className="col-lg-5">
+                                <Alert severity="success">Thanh toán thành công. Quay lại 
+                                    <Link to="/" style={{color: 'blue'}}> Trang chủ</Link>
+                                </Alert>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>Rạp</strong>
+                                            </td>
+                                            <td>
+                                                {this.state.data.jsonCinema.name}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Phim</strong>
+                                            </td>
+                                            <td>
+                                                {this.state.film.namefilm}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Ngày</strong>
+                                            </td>
+                                            <td>
+                                                {datetime[0]}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Xuất chiếu</strong>
+                                            </td>
+                                            <td>
+                                                {datetime[1]}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Ghế</strong>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        {
+                                            this.state.selectSeat.map((i, k) => (
+                                                <tr>
+                                                    <td>Ghế : {i.name}</td>
+                                                    <td>Giá : {i.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} VNĐ</td>
+                                                </tr>
+                                            ))
+                                        }
+                                        <tr>
+                                            <td>
+                                                <strong>Tổng</strong>
+                                            </td>
+                                            <td>
+                                                {this.state.priceCurrent.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} VNĐ == {price} USD
+                                                    </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
             )
-        }else{
+        } else {
             if (this.state.data !== null && client.schedule !== null) {
                 var datetime = this.state.data.start.split(" ");
                 return (
                     <>
+
                         <Snackbar open={this.state.setOpenAlert} autoHideDuration={6000} onClose={() => this.handleClose()}>
                             <Alert onClose={() => this.handleClose()} severity={this.state.setTypeAlert}>
                                 {this.state.setMessageAlert}
                             </Alert>
+
                         </Snackbar>
+                        <Backdrop open={this.state.openLoading} style={{ zIndex: 99999 }}>
+                            <CircularProgress color="inherit" />
+
+                        </Backdrop>
                         <section className="contact-section">
                             <div className="container">
+
                                 <div className="row">
                                     <div className="col-6">
                                         <h2 className="contact-title">Thanh toán</h2>
@@ -327,12 +423,12 @@ class Payment extends Component {
                                             // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                                             onSuccess={(details, data) => {
                                                 alert("Transaction completed by " + details.payer.name.given_name);
-    
+                                                this.setState({ openLoading: true })
                                                 // OPTIONAL: Call your server to save the transaction
                                                 console.log("submit")
                                                 var client = JSON.parse(localStorage.getItem("client"));
                                                 var check = true;
-    
+
                                                 var item = {
                                                     username: client.username,
                                                     gmail: this.state.gmail,
@@ -345,8 +441,8 @@ class Payment extends Component {
                                                     price: this.state.priceCurrent,
                                                 }
                                                 console.log(item)
-    
-    
+
+
                                                 return fetch(AppConstant.domainURL + '/api/bill/add', {
                                                     method: "POST",
                                                     headers: {
@@ -358,6 +454,7 @@ class Payment extends Component {
                                                     .then(req => req.json())
                                                     .then(data => {
                                                         console.log(data);
+                                                        this.setState({ openLoading: false })
                                                         if (data.code === 201) {
                                                             this.setState({
                                                                 setOpenAlert: true,
@@ -369,7 +466,7 @@ class Payment extends Component {
                                                                 setOpenAlert: true,
                                                                 setTypeAlert: "success",
                                                                 setMessageAlert: "Đặt vé thành công",
-                                                                isPayment : true
+                                                                isPayment: true
                                                             })
                                                         } else {
                                                             this.setState({
@@ -378,7 +475,7 @@ class Payment extends Component {
                                                                 setMessageAlert: "Xãy ra lỗi, vui lòng đặt nhập lại"
                                                             })
                                                         }
-    
+
                                                     })
                                                     .catch(error => {
                                                         console.log(error)
@@ -449,29 +546,33 @@ class Payment extends Component {
                                                         <strong>Tổng</strong>
                                                     </td>
                                                     <td>
-                                                        {this.state.priceCurrent.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} VNĐ => {price} USD
+                                                        {this.state.priceCurrent.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.")} VNĐ == {price} USD
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-    
-    
+
+
                                     </div>
                                 </div>
                             </div>
                         </section>
-    
+
                     </>
                 )
             } else {
                 return (
-                    <h1>Bạn chưa chọn lịch chiếu</h1>
+                    <section className="contact-section">
+                        <div className="container">
+                            <h1>Bạn chưa chọn lịch chiếu</h1>
+                        </div>
+                    </section>
                 )
             }
         }
 
-        
-            
+
+
 
     }
 }
