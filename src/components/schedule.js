@@ -173,7 +173,7 @@ class ScheduleFilm extends Component {
                                             <>
 
                                                 <div className="">
-                                                    <h3 className="mb-30">{i.film.namefilm}- {this.state.indexCinema} - {i.date}</h3>
+                                                    <h3 className="mb-30">{i.film.namefilm}</h3>
                                                     <div className="row">
                                                         <div className="col-md-3">
                                                             <img src={i.film.image} className="img-fluid" style={{ width: "70%", }} />
