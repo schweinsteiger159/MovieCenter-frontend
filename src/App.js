@@ -18,6 +18,7 @@ import ChangePassword from './components/pages/change-password';
 import ForgotPassword from './components/pages/forgot-password';
 import CheckOut from './components/pages/checkout';
 import Coupon from './components/pages/coupon';
+import AdjustProfile from './components/pages/adjust-profile';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
       <Route path='/customer/profile' component={Profile}></Route>
       <Route path='/changePassword' component={ChangePassword}></Route>
       <Route path="/forgotPassword" component={ForgotPassword}></Route>
+      <Route path="/customer/adjust-profile" component={AdjustProfile}></Route>
       
     </Router>
 

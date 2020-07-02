@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ColorizeIcon from '@material-ui/icons/Colorize';
 import DehazeIcon from '@material-ui/icons/Dehaze';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import {
   makeStyles,
   Typography,
@@ -14,7 +14,9 @@ import {
   Card,
   CardContent,
   Tooltip,
-  Fab
+  Fab,
+  Backdrop,
+  CircularProgress
 } from '@material-ui/core';
 
 import Header from "../header";
@@ -60,7 +62,8 @@ class Profile extends Component {
     super(props);
     this.state = {
       username : null,
-      account: null
+      account: null,
+      isLoading: true
     };
     this.isLogin();
     console.log("Username ===> ", this.state.username);
@@ -76,7 +79,8 @@ class Profile extends Component {
     .then(res => res.json())
     .then(dataAccount => {
       console.log("Account Info ===> ", dataAccount)
-      this.setState({ account: dataAccount })
+      this.setState({ account: dataAccount });
+      this.setState({ isLoading : false });
     })
     .catch(console.log)
   }
@@ -90,8 +94,16 @@ class Profile extends Component {
     }
   }
 
+  adjustProfile = () => {
+    return (
+      <>
+        <Link to="/customer/adjust-profile" />
+      </>
+    );
+  }
+
   render() {
-    console.log("State ===> ", this.state);
+    
     if (this.state.username === null || this.state.username === undefined) {
       return (
         <Redirect to="/customer/login" />
@@ -136,6 +148,7 @@ class Profile extends Component {
                           color="primary"
                           className={useStyles.button}                       
                           startIcon={<ColorizeIcon />}
+                          href="/customer/adjust-profile"
                         >
                           Tùy chỉnh
                         </Button>
@@ -328,7 +341,15 @@ class Profile extends Component {
       );
     } else {
       return (
-        <h1>Loading data</h1>
+        <div>
+          <Backdrop 
+            className={useStyles.backdrop} 
+            open={this.state.isLoading}
+            invisible={true}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </div>
       );
     } 
   }
