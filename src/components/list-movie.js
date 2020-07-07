@@ -21,17 +21,19 @@ const ListMovie = (props) => {
                     {props.films.map((film, key) => (
                         <div className="col-lg-4 col-md-6" key={key}>
                             <div className="single_place">
-                                <div className="thumb" >
-                                <img src={film.image} alt="" style={{ weight: 100, height: 350 }}/>
+                            <Link to={"/detail/"+film.codeFilm}>
+                                <div className="thumb" style={{height : 350,backgroundImage : `url(${film.image})`, backgroundRepeat : 'no-repeat', backgroundSize : 'cover'}}>
+                                
                                     <a href="#" className="prise">
                                         {film.status}
-                                </a>
+                                    </a>
                                 </div>
+                                </Link>
                                 <div className="place_info">
                                     <Link to={"/detail/"+film.codeFilm}>
                                     <h3>{film.namefilm}</h3>
                                     </Link>
-                                    <p>{(film.description) ? film.description.substring(0,50) : ""}...</p>
+                                    <p dangerouslySetInnerHTML={{__html: (film.description) ? film.description.substring(0,50)+"..." : ""}}></p>
                                     <div className="rating_days d-flex justify-content-between">
                                         <span className="d-flex justify-content-center align-items-center">
                                            

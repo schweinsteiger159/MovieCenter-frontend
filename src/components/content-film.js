@@ -8,21 +8,55 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 class ContentFilm extends Component {
     constructor(props) {
         super(props)
         this.state = {
             film: null,
+            cinema: null,
             isRedirect: 0,
             sizeComment: 3,
             indexComment: 0,
-            setOpenAlert: false
+            setOpenAlert: false,
+            openModalSchedule: false,
+            fullWidth: true,
+            maxWidth: 'md',
+            schedule: null,
         }
+    }
+
+    handleOpenModalSchedule = () => {
+        this.setState({ openModalSchedule: true })
+    }
+
+    handleCloseModalSchedule = () => {
+        this.setState({ openModalSchedule: false })
     }
 
     componentDidMount() {
         this.loadFilm();
+        this.loadCinema();
     }
+
+    loadCinema = () => {
+        fetch(AppConstant.domainURL + '/api/cinema/status/ACTIVE')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                this.setState({ cinema: data.data })
+                console.log(this.state)
+            })
+            .catch(console.log)
+    }
+
 
     loadFilm = () => {
         fetch(AppConstant.domainURL + '/api/film/findcode/' + this.props.codeFilm)
@@ -60,7 +94,7 @@ class ContentFilm extends Component {
         var user = JSON.parse(localStorage.getItem("client"));
         if (stt === 'SHOWING') {
             return (
-                <Link class="genric-btn primary circle" style={{ width: "-webkit-fill-available" }} to="/cinema">Đặt vé</Link>
+                <button class="genric-btn primary circle" style={{ width: "-webkit-fill-available" }} onClick={() => this.handleOpenModalSchedule()}>Đặt vé</button>
             )
         }
     }
@@ -76,9 +110,10 @@ class ContentFilm extends Component {
                         action="#"
                         id="commentForm"
                         onSubmit={this.onSubmitComment}
-                        style={{paddingTop: 30}}
+                        style={{ paddingTop: 30 }}
+                        style={{ marginBottom: 100 }}
                     >
-                        <Snackbar open={this.state.setOpenAlert} autoHideDuration={6000} onClose={() =>this.handleClose()}>
+                        <Snackbar open={this.state.setOpenAlert} autoHideDuration={6000} onClose={() => this.handleClose()}>
                             <Alert onClose={() => this.handleClose()} severity="success">
                                 Bình luận thành công
                             </Alert>
@@ -193,7 +228,7 @@ class ContentFilm extends Component {
                     // document.getElementById("alert-success").style.display = "block";
                     // document.getElementById("alert-error").style.display = "none";
                     this.loadFilm();
-                    this.setState({setOpenAlert : true})
+                    this.setState({ setOpenAlert: true })
                 } else {
                     document.getElementById("alert-error").style.display = "block";
 
@@ -220,6 +255,172 @@ class ContentFilm extends Component {
         this.setState({ setOpenAlert: false })
     };
 
+    getSchedule = (req) => {
+        console.log(req);
+        this.setState({ indexCinema: req.cinema })
+        fetch(AppConstant.domainURL + '/api/schedule/cinema/date', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req)
+        })
+            .then(req => req.json())
+            .then(data => {
+                this.setState({ schedule: data })
+            })
+            .catch(error => {
+                console.log(error)
+                // this.setState({ data: [{ null: null }] })
+            });
+    }
+
+    getToday = () => {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var dateStr = dd + '-' + mm + '-' + yyyy;
+        return dateStr;
+    }
+
+    loadScheduleAtCinema = (data) => {
+        var today = new Date();
+        console.log("data");
+        console.log(data);
+
+        var listDate = [];
+        for (var i = 0; i <= 4; i++) {
+            var newDate = this.addDays(today, i);
+            var dd = String(newDate.getDate()).padStart(2, '0');
+            var mm = String(newDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = newDate.getFullYear();
+            var day_name = '';
+            switch (newDate.getDay()) {
+                case 0:
+                    day_name = "Sun";
+                    break;
+                case 1:
+                    day_name = "Mon";
+                    break;
+                case 2:
+                    day_name = "Tue";
+                    break;
+                case 3:
+                    day_name = "Wed";
+                    break;
+                case 4:
+                    day_name = "Thu";
+                    break;
+                case 5:
+                    day_name = "Fri";
+                    break;
+                case 6:
+                    day_name = "Sta";
+            }
+
+            var dateStr = dd + '-' + mm + '-' + yyyy;
+            var item = {
+                mm: mm,
+                dd: dd,
+                yyyy: yyyy,
+                dateStr: dateStr,
+                day_name: day_name
+            }
+            // console.log(item);
+            listDate.push(item);
+        }
+        return (
+            <div>
+                <div className="whole-wrap">
+                    <div className="container box_1170">
+                        <hr></hr>
+                        <div style={{ display: "flex" }}>
+                            {listDate.map(date => {
+                                var choose = "";
+                                if (date.dateStr == this.state.indexDate) {
+                                    choose = "choose-element";
+                                }
+                                return (
+                                    <>
+                                        <div className={"day-element " + choose} onClick={() => this.chooseDate(date.dateStr)}>
+                                            <span>{date.mm}</span>
+                                            <p>{date.day_name}</p>
+                                            <strong>{date.dd}</strong>
+                                        </div>
+                                        <div className="space-left"></div>
+                                    </>
+                                )
+                            })}
+
+                        </div>
+
+                        <hr></hr>
+                        {
+                            data.length == 0 ? (
+                                <h4>Không có lịch chiếu</h4>
+                            ) : (
+                                    data.map(i => {
+                                        console.log(i.film.image)
+                                        return (
+                                            <>
+
+                                                <div className="">
+                                                    <h3 className="mb-30">{i.film.namefilm}</h3>
+                                                    <div className="row">
+                                                        <div className="col-md-3">
+                                                            <img src={i.film.image} className="img-fluid" style={{ width: "70%", }} />
+                                                        </div>
+                                                        <div className="col-md-9 mt-sm-20">
+                                                            {i.schedule.map(j => {
+                                                                var dateTime = j.start.split(" ");
+                                                                var today = new Date();
+                                                                var dd = String(today.getDate()).padStart(2, '0');
+                                                                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                                                var yyyy = today.getFullYear();
+                                                                var timeNow = mm + '-' + dd + '-' + yyyy + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+
+                                                                var timeSchedule = j.start.split(" ");
+                                                                var dateSchedule = timeSchedule[0].split("-");
+
+                                                                var datetimeSchedule = dateSchedule[1] + '-' + dateSchedule[0] + '-' + dateSchedule[2] + " " + timeSchedule[1];
+                                                                console.log(timeNow);
+                                                                console.log(datetimeSchedule);
+
+                                                                var timeNowDate = Date.parse(timeNow);
+                                                                var timeScheduleDate = Date.parse(datetimeSchedule);
+
+                                                                console.log(timeNowDate);
+                                                                console.log(timeScheduleDate);
+
+                                                                if (timeNowDate < timeScheduleDate) {
+                                                                    return (
+                                                                        <Link class="genric-btn primary-border radius" to="/select-seat"
+                                                                            onClick={() => this.saveSelectPosition(this.state.indexCinema, j.room.code, i.film.codeFilm, j.start)}>
+                                                                            {dateTime[1]}<span
+                                                                                class="lnr lnr-arrow-right"></span></Link>
+
+                                                                    )
+                                                                }
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                    <hr></hr>
+                                                </div>
+                                            </>
+                                        )
+                                    })
+                                )
+                        }
+                    </div>
+                </div>
+            </div>
+
+        )
+
+
+    }
     render() {
         console.log(this.state)
         if (this.state.film !== null) {
@@ -342,7 +543,55 @@ class ContentFilm extends Component {
                     </div>
 
 
+                    <Dialog
+                        fullWidth={this.state.fullWidth}
+                        maxWidth={this.state.maxWidth}
+                        open={this.state.openModalSchedule}
+                        onClose={this.handleCloseModalSchedule}
+                        aria-labelledby="max-width-dialog-title"
+                    >
+                        <DialogTitle id="max-width-dialog-title">Xuất chiếu</DialogTitle>
+                        <DialogContent>
+                            <div>
+                                <div className="where_togo_area" style={{ padding: 0 }}>
+                                    <div className="container">
+                                        <div className="row align-items-center">
+                                            <div className="col-lg-9">
+                                                <div className="button-group-area mt-10">
+                                                    {
+                                                        this.state.cinema !== null
+                                                            ?
+                                                            this.state.cinema.map((i, k) => (
+                                                                <>
+                                                                    <p
+                                                                        className="genric-btn danger radius "
+                                                                        style={{ background: "transparent" }}
+                                                                    >
+                                                                        {i.name}
+                                                                    </p>
+                                                                </>
+                                                            ))
 
+                                                            :
+                                                            <>
+                                                            </>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseModalSchedule} color="primary">
+                                Close
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </>
             )
         } else {

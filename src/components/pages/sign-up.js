@@ -110,7 +110,7 @@ class SignUp extends Component {
       "gender" : this.state.gender,
       "dayOfBirth" : this.state.dob
     }
-    console.log("Preparing data to create account " + account)
+    console.log(account)
     this.createAccount(account);
   }
 

@@ -61,6 +61,7 @@ class ContentBlog extends Component {
                         action="#"
                         id="commentForm"
                         onSubmit={this.onSubmitComment}
+                        style={{marginBottom : 100}}
                     >
 
                         <div className="row">
